@@ -6,7 +6,6 @@ class ReturnToHomepageViaMainLogoTest < Capybara::Rails::TestCase
     restaurant = FactoryGirl.create(:restaurant)
     visit restaurant_path(restaurant)
     within("#main_logo") do
-      save_and_open_page
       click_on "retto"
     end
     assert current_path == root_path
