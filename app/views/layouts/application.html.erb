@@ -16,6 +16,8 @@
           <div class="controls">
             <% if cookies[:order_id] %>
               <%= link_to "My Order", order_path(cookies[:order_id]), {:class => "btn btn-success"} %>
+            <% else %>
+              <%= link_to "My Order", new_order_path, { :class => 'btn btn-success' } %>
             <% end %>
             <% if current_user %>
             <%= link_to "My Account", user_path(current_user), {:class => "btn btn-info"} %>
