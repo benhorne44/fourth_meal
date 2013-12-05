@@ -1,0 +1,8 @@
+<h1>Sorry, Brah</h1>
+<% @orders.each do |order| %>
+  <div id="order_<%= order.id %>">
+    <% order.items.each do |item| %>
+      <h3><%= item.title %></h3>
+    <% end %>
+  </div>
+<% end %>

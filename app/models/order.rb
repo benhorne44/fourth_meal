@@ -2,9 +2,18 @@ class Order < ActiveRecord::Base
   has_many :order_items
   has_many :items, through: :order_items
   belongs_to :user
+  belongs_to :restaurant
 
   def self.pending
     where(status: "pending")
+  end
+
+  def self.find_or_create_new(id)
+    if id
+      Order.find(id)
+    else
+      Order.new 
+    end
   end
 
   def total_items

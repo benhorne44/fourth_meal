@@ -18,4 +18,6 @@ DinnerDash::Application.routes.draw do
   post "place_order" => "orders#place_order", as: 'place_order'
 
   get "dashboard" => "users#dashboard", as: 'dashboard'
+  get "cart" => "carts#index", as: "cart"
 end
+

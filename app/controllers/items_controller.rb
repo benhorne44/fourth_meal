@@ -52,8 +52,11 @@ class ItemsController < ApplicationController
   end
 
   def add_to_order
-    order = Order.find(cookies[:order_id])
+    cookies[:order_ids] ||= []
     item = Item.find(params[:id])
+    restaurant = item.restaurant
+    order = restaurant.find_or_create_new_order(cookies[:order_ids])
+    cookies[:order_ids] << order.id
     if order.items.include? item
       order_item = OrderItem.where(order_id:order.id, item_id:item.id).first
       new_quantity = order_item.quantity + 1
