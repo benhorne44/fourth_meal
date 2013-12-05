@@ -15,6 +15,7 @@ DinnerDash::Application.routes.draw do
   get "logout" => "user_sessions#destroy"
 
   post "checkout/:id" => "orders#checkout", as: 'checkout'
+  post "checkout_all" => "orders#checkout_all", as: 'checkout_all'
   post "place_order" => "orders#place_order", as: 'place_order'
 
   get "dashboard" => "users#dashboard", as: 'dashboard'

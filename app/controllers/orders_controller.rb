@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :require_login, except: [:new, :show, :checkout]
+  before_action :require_login, except: [:new, :show, :checkout, :checkout_all]
   before_action :require_admin, only: [:index]
 
   def index
@@ -37,6 +37,17 @@ class OrdersController < ApplicationController
     #   @order = Order.where(user_id: current_user.id).last
     #   @items = @order.items
     # end
+  end
+
+  def checkout_all
+    if cookies[:order_ids]
+      order_ids = cookies[:order_ids].to_s.split(',')
+      @orders = Order.find(order_ids)
+      @total = @orders.inject(0) { |sum, order| sum += order.subtotal }
+    else
+      flash.notice = "There was an error processing your request"
+      redirect_to :back
+    end
   end
 
   def place_order
