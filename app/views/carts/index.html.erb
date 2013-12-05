@@ -1,6 +1,7 @@
 <h1>Sorry, Brah</h1>
 <% @orders.each do |order| %>
   <div id="order_<%= order.id %>">
+    <h2><%= order.restaurant.name %></h2>
     <% order.items.each do |item| %>
       <h3><%= item.title %></h3>
     <% end %>
