@@ -22,14 +22,21 @@ class OrdersController < ApplicationController
   end
 
   def checkout
-    unless current_user
-      flash.notice = "Login is required to checkout"
-      redirect_to login_path
-    else
-      current_user.associate_order(cookies[:order_id])
-      @order = Order.where(user_id: current_user.id).last
+    if cookies[:order_ids].to_s.split(",").include? params[:id].to_s
+      @order = Order.find(params[:id])
       @items = @order.items
+    else
+      flash.notice = "There was an error processing your request"
+      redirect_to :back
     end
+    # unless current_user
+    #   flash.notice = "Login is required to checkout"
+    #   redirect_to login_path
+    # else
+    #   current_user.associate_order(cookies[:order_id])
+    #   @order = Order.where(user_id: current_user.id).last
+    #   @items = @order.items
+    # end
   end
 
   def place_order
