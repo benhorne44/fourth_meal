@@ -7,7 +7,8 @@ DinnerDash::Application.routes.draw do
   resources :categories
   resources :user_sessions, only: [:new, :create, :destroy]
   resources :charges
-  root to: 'items#index'
+  resources :restaurants
+  root to: 'restaurants#index'
 
   post "items/add_to_order/:id" => 'items#add_to_order', as: 'add_item'
   get "login" => "user_sessions#new"

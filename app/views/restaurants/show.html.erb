@@ -1,0 +1,6 @@
+<h1><%= @restaurant.name %></h1>
+<div id="items">
+  <% @items.each do |item| %>
+    <div id="item_<%= item.id %>"><%= item.title %></div>
+  <% end %>
+</div>

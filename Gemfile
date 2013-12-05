@@ -50,6 +50,7 @@ group :test, :development do
   gem 'guard-minitest'
   gem 'sqlite3'
   gem 'pg'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 group :production do
