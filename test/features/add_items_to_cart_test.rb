@@ -1,5 +1,3 @@
-# require 'pry'
-
 require_relative "../test_helper"
 
 class AddItemsToCartTest < Capybara::Rails::TestCase
@@ -36,6 +34,6 @@ class AddItemsToCartTest < Capybara::Rails::TestCase
       assert_content page, "Ben's Beans"
       assert_content page, "Waffles"
     end
-  end 
+  end
 
 end

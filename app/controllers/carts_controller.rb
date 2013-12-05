@@ -1,10 +1,8 @@
-require "pry"
-
 class CartsController < ApplicationController
 
   def index
-    @orders = [Order.find(cookies[:order_ids])]
-    binding.pry
+    order_ids = cookies[:order_ids].to_s.split(',')
+    @orders = Order.find(order_ids)
   end
 
 end

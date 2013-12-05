@@ -60,10 +60,12 @@ class ItemsController < ApplicationController
 
     if cookies[:order_ids].blank?
       cookies[:order_ids] = order.id.to_s
-    else 
-      cookies[:order_ids] = cookies[:order_ids] << ",#{order.id}"
+    else
+      order_ids = cookies[:order_ids]
+      cookies.delete :order_ids
+      cookies[:order_ids] = order_ids << ",#{order.id}"
     end
-    binding.pry
+
     if order.items.include? item
       order_item = OrderItem.where(order_id:order.id, item_id:item.id).first
       new_quantity = order_item.quantity + 1
