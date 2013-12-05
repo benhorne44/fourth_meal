@@ -1,3 +1,5 @@
+require "pry"
+
 class ItemsController < ApplicationController
 
   before_action :require_login, except: [:index, :show, :add_to_order]
@@ -52,8 +54,18 @@ class ItemsController < ApplicationController
   end
 
   def add_to_order
-    order = Order.find(cookies[:order_id])
     item = Item.find(params[:id])
+    restaurant = item.restaurant
+    order = restaurant.find_or_create_new_order(cookies[:order_ids])
+
+    if cookies[:order_ids].blank?
+      cookies[:order_ids] = order.id.to_s
+    else
+      order_ids = cookies[:order_ids]
+      cookies.delete :order_ids
+      cookies[:order_ids] = order_ids << ",#{order.id}"
+    end
+
     if order.items.include? item
       order_item = OrderItem.where(order_id:order.id, item_id:item.id).first
       new_quantity = order_item.quantity + 1
@@ -62,7 +74,7 @@ class ItemsController < ApplicationController
       order.items << item
     end
     flash.notice = item.title + " added to cart!"
-    redirect_to :back
+    redirect_to restaurant_path(restaurant)
   end
 
   private
