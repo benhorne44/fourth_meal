@@ -3,8 +3,15 @@
   <div id="order_<%= order.id %>">
     <h2><%= order.restaurant.name %></h2>
     <% order.items.each do |item| %>
-      <h3><%= item.title %></h3>
-      <p>Quantity: <%= order_item_quantity(order, item) %></p>
+      <div id="item_<%= item.id %>">
+        <h3><%= item.title %></h3>
+        <%= form_for order_item(order, item) do |f| %>
+          <%= f.label :quantity %>
+          <%= f.number_field :quantity, value: order_item_quantity(order, item) %>
+          <%= f.submit "Update Quantity" %>
+        <% end %>
+        <%= button_to "Remove", order_item_path(order_item(order, item)), {method: 'delete', :class => "btn btn-danger remove-item", id: 'remove_item'} %>
+      </div>
     <% end %>
       <%= button_to "Checkout", checkout_path(order) %>
   </div>
