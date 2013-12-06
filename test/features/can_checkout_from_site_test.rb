@@ -52,7 +52,6 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       assert_content page, "Waffles"
       assert_content page, "Ben's Beans"
     end
-    save_and_open_page
   end
 
   test "checkout all page displays order total for all restaurants" do
