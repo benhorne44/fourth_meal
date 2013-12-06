@@ -36,4 +36,26 @@ class AddItemsToCartTest < Capybara::Rails::TestCase
     end
   end
 
+  test "an item that is already in the cart when added increases the quantity" do
+    restaurant = FactoryGirl.create(:restaurant)
+    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    visit restaurant_path(restaurant)
+    within("#item_1") do
+      click_on "Add to Order"
+    end
+    click_on "Cart"
+    within("#order_1") do
+      assert_content page, "Quantity: 1"
+    end
+    visit restaurant_path(restaurant)
+    within("#item_1") do
+      click_on "Add to Order"
+    end
+    click_on "Cart"
+    within("#order_1") do
+      assert_content page, "Quantity: 2"
+    end
+    save_and_open_page
+  end
+
 end
