@@ -7,6 +7,15 @@
     <h1><%= @user.username %>, your order is on the way</h1>
 
     <p>You card has been charged $<%= @order.subtotal %>0</p>
+
+    View your order details here: 
+    <% if current_user %>
+    <!-- should be link to order details page -->
+      <%= link_to root_path %>
+    <% else %>
+    <!-- add obscure link to review order -->
+      <%= link_to root_path %>
+    <% end %>
       
   </body>
 </html>
