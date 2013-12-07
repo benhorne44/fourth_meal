@@ -12,6 +12,7 @@ class UserMailer < ActionMailer::Base
     @order = order
     @items = order.items
     @url = "platable.herokuapp.com"
+    @order_details
     mail(to: @user.email, subject: "Your Grub is Forthcoming!")
   end
 end
