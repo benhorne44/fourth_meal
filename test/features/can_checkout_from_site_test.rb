@@ -22,6 +22,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Checkout"
     end
     assert_content page, "Review Your Order"
+
     within('#order_details') do
       assert_content page, "Beans"
       assert_content page, "Will's Waffles"
@@ -48,6 +49,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       assert_content page, "Beans"
       assert_content page, "Will's Waffles"
     end
+
     within("#restaurant_2_order") do
       assert_content page, "Waffles"
       assert_content page, "Ben's Beans"
@@ -72,6 +74,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
     within("#all_orders_total") do
       assert_content page, "$10.00"
     end
+
   end
 
   def log_in

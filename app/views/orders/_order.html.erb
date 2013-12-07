@@ -1,0 +1,18 @@
+<div id="restaurant_<%= order.restaurant.id %>_order">
+  <div class="checkout-container">
+    <div class="order">
+
+      <%= order.restaurant.name %>
+
+      <%= render partial: "item", collection: order.items %>
+
+      <div class="total">
+        <h4>Subtotal</h4>
+        <h4>$<%= order.subtotal %>0</h4>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
