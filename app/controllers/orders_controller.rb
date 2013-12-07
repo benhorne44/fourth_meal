@@ -29,14 +29,6 @@ class OrdersController < ApplicationController
       flash.notice = "There was an error processing your request"
       redirect_to :back
     end
-    # unless current_user
-    #   flash.notice = "Login is required to checkout"
-    #   redirect_to login_path
-    # else
-    #   current_user.associate_order(cookies[:order_id])
-    #   @order = Order.where(user_id: current_user.id).last
-    #   @items = @order.items
-    # end
   end
 
   def checkout_all
