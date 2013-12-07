@@ -3,9 +3,9 @@ class OrderItemsController < ApplicationController
     order_item = OrderItem.find(params[:id])
 
     if order_item.update(order_item_params)
-      redirect_to order_item.order, notice: 'Your item was updated.'
+      redirect_to cart_path, notice: 'Your item was updated.'
     else
-      redirect_to order_item.order, alert: 'There was an error.'
+      redirect_to cart_path, alert: 'There was an error.'
     end
   end
 
