@@ -9,10 +9,4 @@ module CartsHelper
     order.order_items.where(item_id: item.id).first
   end
 
-  def login_status
-    if cookies[:guest_email]
-      "Logged in as Guest"
-    end
-  end
-
 end

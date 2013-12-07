@@ -17,6 +17,7 @@
           <%= link_to "retto", root_path %>
         </div>
           <div class="controls">
+            <p><%= login_status %></p>
             <%= link_to "Cart", cart_path %>
             <% if current_user %>
             <%= link_to "My Account", user_path(current_user), {:class => "btn btn-info"} %>

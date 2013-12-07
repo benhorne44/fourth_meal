@@ -75,7 +75,8 @@ password: 'password'})
     #  assert_content page, "Deviled Eggs"
     #  assert_content page, "Spam"
     #end
-
   end
+
+  
 
 end
