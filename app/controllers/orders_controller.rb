@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :require_login, except: [:new, :show, :checkout, :checkout_all]
   before_action :require_admin, only: [:index]
+  before_action :require_user_or_guest, only: [:checkout, :checkout_all]
 
   def index
     @orders = Order.all
