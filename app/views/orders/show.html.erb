@@ -18,14 +18,15 @@
   <% @order_items.each do |order_item| %>
     <% item = order_item.item %>
     <tr id="item_<%= item.id %>">
-      <td class="item-title"><%= link_to item.title, item_path(item.id)  %></td>
-      <td><%= item.description %></td>
-      <td><%= print_price(item.price) %></td>
 
+      <%= render partial: "item", :locals => {item: order_item.item} %>
+      
       <%= form_for order_item do |f| %>
-       <td><%= f.number_field :quantity %>
-         <%= f.submit "Adjust Quantity", {:class => "btn btn-success"} %></td>
-        <% end %>
+        <td>
+          <%= f.number_field :quantity %>
+          <%= f.submit "Adjust Quantity", {:class => "btn btn-success"} %>
+        </td>
+      <% end %>
       <td>
         <%= link_to "x", order_item_path(order_item), {method: 'delete', :class => "btn btn-danger remove-item", id: 'remove_item'} %></td>
     </tr>

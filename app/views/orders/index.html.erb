@@ -11,17 +11,17 @@
         <th>Categories</th>
       </tr>
     </thead>
-    <% items = order.items %>
-    <% items.each do |item| %>
+    <% order.items.each do |item| %>
     <tbody>
     <tr>
-      <td><%= item.title %></td>
-      <td><%= item.description %></td>
-      <td><%= print_price(item.price) %></td>
+
+      <%= render partial: "item", :locals => {item: item} %>
+      
       <td>
-      <% item.categories.each do |category| %>
+        <% item.categories.each do |category| %>
           <%= category.name %>
-          <% end %></td>
+        <% end %>
+      </td>
     </tr>
     </tbody>
     <% end %>
