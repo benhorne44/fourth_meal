@@ -1,3 +1,3 @@
-<h4><%= item.title %></h4>
-<p><%= item.description %></p>
-<p><%= print_price(item.price) %>
+<td class="item-title"><%= link_to item.title, item_path(item.id)  %></td>
+<td><%= item.description %></td>
+<td><%= print_price(item.price) %></td>
