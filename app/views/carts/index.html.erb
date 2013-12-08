@@ -1,4 +1,4 @@
-<h1>Sorry, Brah</h1>
+<h1>Your cart is empty.</h1>
 <% @orders.each do |order| %>
   <div id="order_<%= order.id %>">
     <h2><%= order.restaurant.name %></h2>
@@ -16,4 +16,8 @@
       <%= button_to "Checkout", checkout_path(order) %>
   </div>
 <% end %>
-<%= button_to "Checkout All", checkout_all_path %>
+<% if @orders.count > 1 %>
+  <div id="checkout_all">
+    <%= button_to "Checkout All", checkout_all_path %>
+  </div>
+<% end %>

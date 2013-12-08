@@ -45,7 +45,7 @@ class AddItemsToCartTest < Capybara::Rails::TestCase
     end
     click_on "Cart"
     within("#order_1") do
-      assert_content page, "Quantity: 1"
+      assert_equal find_field("order_item_quantity").value, "1"
     end
     visit restaurant_path(restaurant)
     within("#item_1") do
@@ -53,9 +53,36 @@ class AddItemsToCartTest < Capybara::Rails::TestCase
     end
     click_on "Cart"
     within("#order_1") do
-      assert_content page, "Quantity: 2"
+      assert_equal find_field("order_item_quantity").value, "2"
     end
-    save_and_open_page
+  end
+
+  test "a single order cart does not have the 'Checkout All' button" do
+    restaurant = FactoryGirl.create(:restaurant)
+    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    visit restaurant_path(restaurant)
+    within('#item_1') do
+      click_on "Add to Order"
+    end
+    click_on "Cart"
+    refute_css('#checkout_all')
+  end
+
+  test "multiple order cart does have the 'Checkout All' button" do
+    restaurant = FactoryGirl.create(:restaurant)
+    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    restaurant2 = FactoryGirl.create(:restaurant, name: "Ben's Beans")
+    restaurant2.items.create(title: "Waffles", price: 5, description: "Waffles waffles waffles!")
+    visit restaurant_path(restaurant)
+    within("#item_1") do
+      click_on "Add to Order"
+    end
+    visit restaurant_path(restaurant2)
+    within("#item_2") do
+      click_on "Add to Order"
+    end
+    click_on "Cart"
+    assert_css('#checkout_all')
   end
 
 end

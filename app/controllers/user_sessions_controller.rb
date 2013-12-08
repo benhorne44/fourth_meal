@@ -18,4 +18,15 @@ class UserSessionsController < ApplicationController
     flash.notice = "Logged out"
     redirect_to items_path
   end
+
+  def options
+  end
+
+  def guest
+  end
+
+  def submit_guest
+    cookies[:guest_email] = params[:email]
+    redirect_to cart_path
+  end
 end

@@ -10,4 +10,14 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def require_user_or_guest
+    unless current_user || guest 
+      redirect_to login_options_path
+    end
+  end
+
+  def guest
+    cookies[:guest_email]
+  end
 end

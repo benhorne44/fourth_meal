@@ -6,7 +6,7 @@ class CartIsEmptyUponArrivalTest < Capybara::Rails::TestCase
     visit root_path
     click_on "Cart"
     save_and_open_page
-    assert_content page, "Sorry, Brah"
+    assert_content page, "Your cart is empty."
   end
 
 end
