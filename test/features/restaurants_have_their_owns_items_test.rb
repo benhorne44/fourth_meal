@@ -30,8 +30,8 @@ class RestaurantsHaveTheirOwnsItemsTest < Capybara::Rails::TestCase
       refute_content page, "Waffles"
       within("#item_1") do
         assert_content page, "Beans"
-      end 
-    end 
+      end
+    end
 
     visit root_path
     within("#restaurant_2") do
