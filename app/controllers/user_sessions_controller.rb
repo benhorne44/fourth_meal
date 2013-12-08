@@ -20,9 +20,6 @@ class UserSessionsController < ApplicationController
   end
 
   def options
-    # if current_user
-    #   redirect_to checkout_path
-    # end
   end
 
   def guest
