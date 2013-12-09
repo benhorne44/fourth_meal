@@ -3,9 +3,10 @@ require "./test/test_helper"
 class CanAddOrEditAnImageTest < Capybara::Rails::TestCase
 
   test "can add an image to an item" do
-    user1 = User.new({username: 'admin', password: 'password'})
+    user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
+    user2 = FactoryGirl.create(:user)
 
     item = Item.new(title: 'Deviled Eggs', description: '12 luscious eggs', price: '1')
     item.save
