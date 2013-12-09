@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     if @user.save
       auto_login(@user)
       flash.notice = "User #{@user.username} created!"
-      UserMailer.welcome_email(@user).deliver
+      # UserMailer.welcome_email(@user).deliver
       redirect_to root_path
     else
       flash.notice = "There was an error"
