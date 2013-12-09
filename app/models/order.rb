@@ -12,8 +12,16 @@ class Order < ActiveRecord::Base
     if id
       Order.find(id)
     else
-      Order.new 
+      Order.new
     end
+  end
+
+  def self.find_all(order_ids)
+    where(id: order_ids)
+  end
+
+  def destroy_if_empty
+    self.destroy if order_items.empty?
   end
 
   def total_items
