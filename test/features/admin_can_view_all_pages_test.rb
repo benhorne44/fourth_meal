@@ -1,12 +1,13 @@
 require "./test/test_helper"
+require 'pry'
 
 class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
 
   test "admin can view all users" do
-    user1 = User.new({username: 'admin', password: 'password'})
+    user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
-    user2 = User.create({username: 'bob_bob', password: 'password'})
+    user2 = FactoryGirl.create(:user)
 
     visit root_path
     click_on "Login"
@@ -20,10 +21,10 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
   end
 
   test "admin can view individual users" do
-    user1 = User.new({username: 'admin', password: 'password'})
+    user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
-    user2 = User.create({username: 'bob_bob', password: 'password'})
+    user2 = FactoryGirl.create(:user)
 
     visit root_path
     click_on "Login"
@@ -33,13 +34,14 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
     click_button "Login"
 
     visit user_path(user2)
-    assert_content page, 'bob_bob'
+    assert_content page, 'big_eater'
   end
 
   test "admin can create item" do
-    user1 = User.new({username: 'admin', password: 'password'})
+    user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
+    user2 = FactoryGirl.create(:user)
 
     visit root_path
     click_on "Login"
@@ -59,9 +61,10 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
 
   test "admin can edit an item" do
     @item = Item.create({title: "Burger", description: "Loafy goodness", price: '1'})
-    user1 = User.new({username: 'admin', password: 'password'})
+    user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
+    user2 = FactoryGirl.create(:user)
 
     visit root_path
     click_on "Login"
@@ -82,9 +85,10 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
     order = Order.new
     order.save
     order.items.create(item)
-    user1 = User.new({username: 'admin', password: 'password'})
+    user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
+    user2 = FactoryGirl.create(:user)
 
     visit root_path
     click_on "Login"
@@ -105,9 +109,11 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
     category2 = Category.create({name: "Lunch"})
     item.categories << category1
 
-    user1 = User.new({username: 'admin', password: 'password'})
+    user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
+    user2 = FactoryGirl.create(:user)
+
     visit root_path
     click_on "Login"
     fill_in "Username", with: 'admin'
@@ -124,9 +130,11 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
     category2 = Category.create({name: "Lunch"})
     item.categories << category1
 
-    user1 = User.new({username: 'admin', password: 'password'})
+    user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
+    user2 = FactoryGirl.create(:user)
+
     visit root_path
     click_on "Login"
     fill_in "Username", with: 'admin'
