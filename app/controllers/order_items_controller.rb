@@ -14,11 +14,8 @@ class OrderItemsController < ApplicationController
     order = Order.find(order_item.order_id)
     order_item.destroy
     restaurant = order.restaurant
-    if order.destroy_if_empty
-      redirect_to cart_path
-    else
-      redirect_to order
-    end
+    order.destroy_if_empty
+    redirect_to cart_path
   end
 
   private
