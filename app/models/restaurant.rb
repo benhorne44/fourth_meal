@@ -9,4 +9,8 @@ class Restaurant < ActiveRecord::Base
     found_order[0] || self.orders.create
   end
 
+  def active_items
+    items.where(active: true)
+  end
+
 end
