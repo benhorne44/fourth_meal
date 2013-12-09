@@ -1,13 +1,11 @@
 <div id="restaurant_<%= restaurant.id %>">
 
-  <h1><%= restaurant.name %></h1>
+  <h1><%= link_to restaurant.name, restaurant %></h1>
 
   <div id="items">
     <ul>
       <%= render partial: "items/item", collection: @items %>
     </ul>
   </div>
-
-  <%= link_to "Visit", restaurant_path(restaurant) %>
 
 </div>
