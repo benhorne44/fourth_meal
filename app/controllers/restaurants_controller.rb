@@ -6,7 +6,7 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id])
-    @items = @restaurant.items
+    @items = @restaurant.active_items
   end
 
 end

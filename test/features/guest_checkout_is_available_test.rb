@@ -35,7 +35,6 @@ class GuestCheckoutIsAvailableTest < Capybara::Rails::TestCase
     click_on "Checkout as Guest"
     fill_in "Email", with: "user@example.com"
     click_on "Login as Guest"
-    save_and_open_page
     assert_content page, "Logged in as Guest"
   end
 end

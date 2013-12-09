@@ -3,7 +3,5 @@
 <% @restaurants.each do |restaurant| %>
 
   <%= render partial: "restaurant", :locals => {restaurant: restaurant} %>
-  
-  <%= link_to "Visit", restaurant_path(restaurant) %>
 
 <% end %>
