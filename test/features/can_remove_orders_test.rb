@@ -18,7 +18,7 @@ class CanRemoveOrdersTest < Capybara::Rails::TestCase
       click_on "remove_item"
     end
 
-    assert_content page, "Your cart is empty."
+    assert_content page, "Your Order is empty."
   end
 
   test "orders disappear when quantity is zero" do

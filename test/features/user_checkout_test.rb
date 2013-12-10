@@ -10,7 +10,7 @@ class UserCheckoutTest < Capybara::Rails::TestCase
       click_on 'Add to Order'
     end
 
-    click_on "Cart"
+    click_on "Order"
 
     within("#order_1") do
       click_on "Checkout"
@@ -38,7 +38,7 @@ class UserCheckoutTest < Capybara::Rails::TestCase
 
     visit root_path
 
-    click_on "Cart"
+    click_on "Order"
 
     within("#order_1") do
       click_on "Checkout"

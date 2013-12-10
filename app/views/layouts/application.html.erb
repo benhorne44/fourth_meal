@@ -18,7 +18,7 @@
         </div>
           <div class="controls">
             <p><%= login_status %></p>
-            <%= link_to "Cart", cart_path %>
+            <%= link_to "Order", cart_path %>
             <% if current_user %>
             <%= link_to "My Account", user_path(current_user), {:class => "btn btn-info"} %>
               <%= link_to "Logout", logout_path, {:class => "btn btn-warning"} %>

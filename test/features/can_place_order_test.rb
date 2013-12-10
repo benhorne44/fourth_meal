@@ -9,8 +9,7 @@ class CanPlaceOrderTest < Capybara::Rails::TestCase
     within("#item_1") do
       click_on "Add to Order"
     end
-
-    assert_content page, "Deviled Eggs added to cart!"
+    assert_content page, "Deviled Eggs added to Order!"
   end
 
   test "cannot set the quantity to a negative number" do
@@ -42,7 +41,7 @@ class CanPlaceOrderTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
 
-    click_on "Cart"
+    click_on "Order"
     within("#item_1") do
       assert_content page, "Deviled Eggs"
     end
@@ -64,13 +63,13 @@ class CanPlaceOrderTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
 
-    click_on "Cart"
+    click_on "Order"
     within("#item_1") do
       assert_equal "2", find_field('order_item_quantity').value
     end
   end
 
-  test "user can adjust items in cart" do
+  test "user can adjust items in Order" do
     restaurant = FactoryGirl.create(:restaurant)
     restaurant.items.create(title: 'Deviled Eggs', description: '12 luscious eggs', price: '1')
     restaurant.items.create(title: 'Hard Boiled Eggs', description: '12 hard eggs', price: '1')
@@ -83,7 +82,7 @@ class CanPlaceOrderTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
 
-    click_on 'Cart'
+    click_on 'Order'
 
     within("#item_1") do
       fill_in "order_item_quantity", with: 10

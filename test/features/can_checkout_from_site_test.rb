@@ -16,7 +16,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     guest_login
-    click_on "Cart"
+    click_on "Order"
     within("#order_1") do
       click_on "Checkout"
     end
@@ -42,7 +42,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     log_in
-    click_on "Cart"
+    click_on "Order"
     within("#order_1") do
       click_on "Checkout"
     end
@@ -68,7 +68,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     guest_login
-    click_on "Cart"
+    click_on "Order"
     click_on "Checkout All"
     assert_content page, "Review Your Order"
     within("#restaurant_1_order") do
@@ -96,7 +96,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     log_in
-    click_on "Cart"
+    click_on "Order"
     click_on "Checkout All"
     assert_content page, "Order for #{@user.username}"
     within("#restaurant_1_order") do
@@ -124,7 +124,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     guest_login
-    click_on "Cart"
+    click_on "Order"
     click_on "Checkout All"
      within("#all_orders_total") do
       assert_content page, "$10.00"
@@ -141,7 +141,7 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
     end
     log_in
     visit root_path
-    click_on "Cart"
+    click_on "Order"
     assert_content page, "Logged in as #{@user.username}"
   end
 

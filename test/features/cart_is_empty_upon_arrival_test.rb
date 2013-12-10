@@ -1,11 +1,11 @@
 require_relative "../test_helper"
 
-class CartIsEmptyUponArrivalTest < Capybara::Rails::TestCase
+class OrderIsEmptyUponArrivalTest < Capybara::Rails::TestCase
 
-  test "visiting cart upon arrival shows it is empty" do
+  test "visiting Order upon arrival shows it is empty" do
     visit root_path
-    click_on "Cart"
-    assert_content page, "Your cart is empty."
+    click_on "Order"
+    assert_content page, "Your Order is empty."
   end
 
 end
