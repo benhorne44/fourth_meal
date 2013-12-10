@@ -1,7 +1,22 @@
-<div id="login">
-  <h2>Login to Checkout</h2>
-</div>
-<div id="guest_checkout">
-  <h2>Guest Checkout</h2>
-  <%= link_to "Checkout as Guest", guest_path %>
+<div class='checkout-options'>  
+
+  <div id='user-checkout' class="login-form" style='float:left'>
+    <div class="form-container">
+      <h2>Login to Checkout</h2>
+      <%= render 'login' %>
+    </div>
+  </div>
+
+  <div id="guest-checkout">
+    <div class="form-container">
+      <h2>Guest Checkout</h2>
+      <%= form_tag submit_guest_login_path do %>
+        <%= label_tag :email %>
+        <%= email_field_tag :email %>
+
+        <%= submit_tag "Continue as Guest", {:class => "btn btn-success", :id => 'guest-button'} %>
+      <% end %>
+    </div>
+  </div>
+
 </div>
