@@ -13,7 +13,7 @@ body {
   margin: 0 0 100px; /* bottom = footer height */
   padding-top: 60px; 
 	font-family: $font-family-base;
-  background:#222222
+  background:#473A36;
 }
 
 .navbar-fixed-top {
@@ -43,9 +43,17 @@ main {
   margin-right:1%;
 }
 
+.controls .btn-primary {
+  background-color: #D3CDCB;
+  border-color: #D3CDCB;
+}
+
 .login {
 }
 
+.new-member {
+  text-align: center;
+}
 
 footer {
   color:#222;
