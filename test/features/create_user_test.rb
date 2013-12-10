@@ -14,7 +14,6 @@ class CreateUserTest < Capybara::Rails::TestCase
     fill_in "Email", with: "bob@example.com"
     fill_in "Password", with: "password"
     click_on "Create my account"
-    save_and_open_page
     assert_content page, "User Bob created!"
   end
 

@@ -23,5 +23,8 @@ DinnerDash::Application.routes.draw do
 
   get "dashboard" => "users#dashboard", as: 'dashboard'
   get "cart" => "carts#index", as: "cart"
+
+  get 'multiple_new' => 'charges#multiple_new', as: 'multiple_order_charge'
+  post 'charges_all' => 'charges#charges_all', as: 'charges_all'
 end
 
