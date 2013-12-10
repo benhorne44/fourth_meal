@@ -14,7 +14,8 @@ class GuestCheckoutIsAvailableTest < Capybara::Rails::TestCase
     within("#order_1") do
       click_on "Checkout"
     end
-    assert_content page, "Checkout as Guest"
+
+    assert_content page, "Guest Checkout"
     assert_content page, "Login to Checkout"
   end
 
@@ -28,13 +29,15 @@ class GuestCheckoutIsAvailableTest < Capybara::Rails::TestCase
     end
 
     visit cart_path
-    refute_content page, "Logged in as Guest"
     within("#order_1") do
       click_on "Checkout"
     end
-    click_on "Checkout as Guest"
-    fill_in "Email", with: "user@example.com"
-    click_on "Login as Guest"
-    assert_content page, "Logged in as Guest"
+
+    within("#guest-checkout") do
+      fill_in "Email", with: "user@example.com"
+    end
+    click_on "Continue as Guest"
+
+    assert_content page, "Will's Waffles"
   end
 end

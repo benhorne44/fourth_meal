@@ -163,9 +163,11 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
   end
 
   def guest_login
-    visit guest_login_path
-    fill_in "Email", with: 'someone@example.com'
-    click_button "Login as Guest"
+    visit login_options_path
+    within("#guest-checkout") do
+      fill_in "Email", with: 'someone@example.com'
+    end
+    click_button "Continue as Guest"
   end
 
 end

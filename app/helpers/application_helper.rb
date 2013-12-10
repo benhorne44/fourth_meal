@@ -5,9 +5,7 @@ module ApplicationHelper
   end
 
   def login_status
-    if cookies[:guest_email]
-      "Logged in as Guest"
-    elsif current_user
+    if current_user
       "Logged in as #{current_user.username}"
     end
   end
