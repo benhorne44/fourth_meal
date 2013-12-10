@@ -7,7 +7,7 @@ class RestaurantsHaveTheirOwnsItemsTest < Capybara::Rails::TestCase
     restaurant.items.create(title: "Waffles", price: 7, description: "Waffles waffles waffles!")
     visit root_path
     within("#restaurant_1") do
-      click_on "Visit"
+      click_on "Will's Waffles"
     end
     within("#item_1") do
       assert_content page, "Beans"
@@ -24,7 +24,7 @@ class RestaurantsHaveTheirOwnsItemsTest < Capybara::Rails::TestCase
     restaurant2.items.create(title: "Waffles", price: 7, description: "Waffles waffles waffles!")
     visit root_path
     within("#restaurant_1") do
-      click_on "Visit"
+      click_on "Will's Waffles"
     end
     within("#items") do
       refute_content page, "Waffles"
@@ -35,7 +35,7 @@ class RestaurantsHaveTheirOwnsItemsTest < Capybara::Rails::TestCase
 
     visit root_path
     within("#restaurant_2") do
-      click_on "Visit"
+      click_on "Ben's Beans"
     end
     within("#items") do
       refute_content page, "Beans"

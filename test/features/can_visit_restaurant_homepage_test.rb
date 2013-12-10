@@ -7,7 +7,7 @@ class CanVisitRestaurantHomepageTest < Capybara::Rails::TestCase
     visit root_path
     assert_content page, "Restaurant Listings"
     within("#restaurant_1") do
-      click_on "Visit"
+      click_link "Will's Waffles"
     end
 
     assert_content page, "Will's Waffles"
@@ -15,7 +15,7 @@ class CanVisitRestaurantHomepageTest < Capybara::Rails::TestCase
 
     visit root_path
     within("#restaurant_2") do
-      click_on "Visit"
+      click_link "Ben's Beans"
     end
 
     assert_content page, "Ben's Beans"
