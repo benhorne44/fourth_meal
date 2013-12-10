@@ -72,7 +72,7 @@ class ItemsController < ApplicationController
     else
       order.items << item
     end
-    flash.notice = item.title + " added to cart!"
+    flash.notice = item.title + " added to Order!"
     redirect_to restaurant_path(restaurant)
   end
 

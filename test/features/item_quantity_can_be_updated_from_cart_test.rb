@@ -1,6 +1,6 @@
 require_relative "../test_helper"
 
-class ItemQuantityCanBeUpdatedFromCartTest < Capybara::Rails::TestCase
+class ItemQuantityCanBeUpdatedFromOrderTest < Capybara::Rails::TestCase
 
   test "an item's quantity being changed another number causes the quantity to be updated" do
     restaurant = FactoryGirl.create(:restaurant)
@@ -13,13 +13,13 @@ class ItemQuantityCanBeUpdatedFromCartTest < Capybara::Rails::TestCase
     end
     assert_content page, "Beans"
 
-    click_on "Cart"
+    click_on "Order"
     within("#item_1") do
-      fill_in "Quantity", with: 10
+      fill_in "order_item_quantity", with: 10
       click_on "Update Quantity"
     end
     within("#item_1") do
-      assert_equal find_field("Quantity").value, "10"
+      assert_equal find_field("order_item_quantity").value, "10"
     end
   end
 
