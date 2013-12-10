@@ -6,7 +6,6 @@ DinnerDash::Application.routes.draw do
   resources :users
   resources :categories
   resources :user_sessions, only: [:new, :create, :destroy]
-  resources :charges
   resources :restaurants
   root to: 'restaurants#index'
 
@@ -26,5 +25,6 @@ DinnerDash::Application.routes.draw do
 
   get 'multiple_new' => 'charges#multiple_new', as: 'multiple_order_charge'
   post 'charges_all' => 'charges#charges_all', as: 'charges_all'
+  post 'charges/:id' => 'charges#create', as: 'charges'
 end
 

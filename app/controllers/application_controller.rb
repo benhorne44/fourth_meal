@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user_or_guest
-    unless current_user || guest 
+    unless current_user || guest
       redirect_to login_options_path
     end
   end
@@ -20,4 +20,12 @@ class ApplicationController < ActionController::Base
   def guest
     cookies[:guest_email]
   end
+
+  def remove_cookie_order_id(order)
+    order_ids = cookies[:order_ids].split(',')
+    order_ids.delete(order.id.to_s)
+    cookies.delete :order_ids
+    cookies[:order_ids] = order_ids.join(',')
+  end
+
 end
