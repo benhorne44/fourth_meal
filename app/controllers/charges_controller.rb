@@ -30,7 +30,8 @@ class ChargesController < ApplicationController
 
   def create
     # Amount in cents
-    @order = Order.find(params[:id])
+    order_id = ([params[:id].to_s] & cookies[:order_ids].to_s.split(',')).first
+    @order = Order.find(order_id)
     @amount = @order.subtotal * 100
 
     customer = Stripe::Customer.create(
