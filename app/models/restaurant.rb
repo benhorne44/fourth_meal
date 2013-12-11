@@ -1,6 +1,9 @@
 class Restaurant < ActiveRecord::Base
   has_many :items
   has_many :orders
+  has_many :users, through: :restaurant_user_roles
+  has_many :roles, through: :restaurant_user_roles
+  has_many :restaurant_user_roles
 
   def find_or_create_new_order(order_ids)
     order_ids = order_ids.to_s.split(',')
