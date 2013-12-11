@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
   def checkout_all
     if cookies[:order_ids]
       order_ids = cookies[:order_ids].to_s.split(',')
-      @orders = Order.find(order_ids)
+      @orders = Order.find_all(order_ids)
       @total = @orders.inject(0) { |sum, order| sum += order.subtotal }
     else
       flash.notice = "There was an error processing your request"

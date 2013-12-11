@@ -1,4 +1,4 @@
-require "pry"
+# require "pry"
 class UserSessionsController < ApplicationController
 
   def new
@@ -26,7 +26,7 @@ class UserSessionsController < ApplicationController
 
   def submit_guest
     cookies[:guest_email] = params[:email]
-    redirect_to cart_path
+    redirect_to cookies[:return_to]
   end
 
   def login_to_checkout
