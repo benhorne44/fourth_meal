@@ -1,3 +1,4 @@
+require "pry"
 class UserSessionsController < ApplicationController
 
   def new
@@ -17,7 +18,7 @@ class UserSessionsController < ApplicationController
   def destroy
     logout
     flash.notice = "Logged out"
-    redirect_to items_path
+    redirect_to root_path
   end
 
   def options
@@ -26,6 +27,16 @@ class UserSessionsController < ApplicationController
   def submit_guest
     cookies[:guest_email] = params[:email]
     redirect_to cart_path
+  end
+
+  def login_to_checkout
+    if login(params[:username], params[:password])
+      flash.notice = "Successfully logged in as #{current_user.username}"
+      redirect_to cookies[:return_to]
+    else
+      flash.notice = "Login failed"
+      redirect_to login_path
+    end
   end
 
   def unset_guest
