@@ -13,4 +13,8 @@ class Restaurant < ActiveRecord::Base
     items.where(active: true)
   end
 
+  def self.published_and_active
+    where(active: true).where(published: true)
+  end
+
 end
