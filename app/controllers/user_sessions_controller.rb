@@ -6,6 +6,7 @@ class UserSessionsController < ApplicationController
 
   def create
     if login(params[:username], params[:password])
+      unset_guest
       flash.notice = "Successfully logged in as #{current_user.username}"
       redirect_to items_path
     else
@@ -23,9 +24,6 @@ class UserSessionsController < ApplicationController
   def options
   end
 
-  def guest
-  end
-
   def submit_guest
     cookies[:guest_email] = params[:email]
     redirect_to cart_path
@@ -39,5 +37,9 @@ class UserSessionsController < ApplicationController
       flash.notice = "Login failed"
       redirect_to login_path
     end
+  end
+
+  def unset_guest
+    cookies.delete :guest_email unless cookies[:guest_email].blank?
   end
 end
