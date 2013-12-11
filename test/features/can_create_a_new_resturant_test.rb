@@ -40,4 +40,53 @@ class CanCreateANewResturantTest < Capybara::Rails::TestCase
     visit restaurant_path(restaurant)
     assert_content page, 'Toms Tavern'
   end
+
+  test "an unpublished restaurant is not displayed on the index" do
+    FactoryGirl.create(:user)
+    visit login_path
+
+    fill_in "Username", with: 'big_eater'
+    fill_in "Password", with: 'password'
+
+    within(".form-container") do
+      click_on "Login"
+    end
+
+    click_on "I want to create a restaurant"
+
+    fill_in "Restaurant Name", with: 'Toms Tavern'
+    fill_in "Address", with: '123 Street Street'
+    fill_in "Zipcode", with: '90210'
+    click_on "Submit for approval"
+
+    visit root_path
+    refute_content page, "Toms Tavern"
+  end
+
+  test "a published restaurant is displayed on the index" do
+    FactoryGirl.create(:user)
+    visit login_path
+
+    fill_in "Username", with: 'big_eater'
+    fill_in "Password", with: 'password'
+
+    within(".form-container") do
+      click_on "Login"
+    end
+
+    click_on "I want to create a restaurant"
+
+    fill_in "Restaurant Name", with: 'Toms Tavern'
+    fill_in "Address", with: '123 Street Street'
+    fill_in "Zipcode", with: '90210'
+    click_on "Submit for approval"
+
+    restaurant = Restaurant.last
+    restaurant.published = true
+    restaurant.active = true
+    restaurant.save
+
+    visit root_path
+    assert_content page, "Toms Tavern"
+  end
 end
