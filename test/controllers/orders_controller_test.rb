@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class OrdersControllerTest < ActionController::TestCase
 
@@ -7,8 +7,7 @@ class OrdersControllerTest < ActionController::TestCase
     # 2. then add the associated item to that order
     # 3. otherwise, create a new order and store in cookie
     # 4. then add the item to to that order
-    item = {title: "cookie", description: "chocolate chip",
-                        price: "3"}
+    item = {title: "cookie", description: "chocolate chip", price: "3"}
     new_item = Item.create(item)
     order = Order.create
     cookies[:order_id] = order.id

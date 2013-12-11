@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
 
   def checkout
     if cookies[:order_ids].to_s.split(",").include? params[:id].to_s
-      @order = Order.find(params[:id])
+      @order = Order.find_by(id: params[:id])
       @items = @order.items
     else
       flash.notice = "There was an error processing your request"

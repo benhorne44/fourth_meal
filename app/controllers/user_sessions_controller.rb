@@ -1,4 +1,4 @@
-# require "pry"
+require "pry"
 class UserSessionsController < ApplicationController
 
   def new
@@ -6,6 +6,13 @@ class UserSessionsController < ApplicationController
 
   def create
     if login(params[:username], params[:password])
+      order_ids = cookies[:order_ids].to_s.split(',')
+      orders = Order.find_all(order_ids)
+      binding.pry
+      orders.each do |order|
+        order.user_id = current_user.id
+        order.save
+      end
       unset_guest
       flash.notice = "Successfully logged in as #{current_user.username}"
       redirect_to items_path
