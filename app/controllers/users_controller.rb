@@ -37,6 +37,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       auto_login(@user)
+      order_ids = cookies[:order_ids].to_s.split(',')
+      orders = Order.find_all(order_ids)
+      orders.each do |order|
+        order.user_id = current_user.id
+        order.save
+      end
       flash.notice = "User #{@user.username} created!"
       # UserMailer.welcome_email(@user).deliver
       redirect_to root_path

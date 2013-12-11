@@ -1,21 +1,20 @@
-require "pry"
 class UserSessionsController < ApplicationController
 
   def new
+    cookies[:return_to] = request.referer
   end
 
   def create
     if login(params[:username], params[:password])
       order_ids = cookies[:order_ids].to_s.split(',')
       orders = Order.find_all(order_ids)
-      binding.pry
       orders.each do |order|
         order.user_id = current_user.id
         order.save
       end
       unset_guest
       flash.notice = "Successfully logged in as #{current_user.username}"
-      redirect_to items_path
+      redirect_to cookies[:return_to]
     else
       flash.notice = "Login failed"
       redirect_to login_path
@@ -36,15 +35,7 @@ class UserSessionsController < ApplicationController
     redirect_to cookies[:return_to]
   end
 
-  def login_to_checkout
-    if login(params[:username], params[:password])
-      flash.notice = "Successfully logged in as #{current_user.username}"
-      redirect_to cookies[:return_to]
-    else
-      flash.notice = "Login failed"
-      redirect_to login_path
-    end
-  end
+
 
   def unset_guest
     cookies.delete :guest_email unless cookies[:guest_email].blank?
