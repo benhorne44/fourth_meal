@@ -8,7 +8,7 @@ class UserSessionsController < ApplicationController
     if login(params[:username], params[:password])
       unset_guest
       flash.notice = "Successfully logged in as #{current_user.username}"
-      redirect_to items_path
+      redirect_back_or_to items_path
     else
       flash.notice = "Login failed"
       redirect_to login_path
