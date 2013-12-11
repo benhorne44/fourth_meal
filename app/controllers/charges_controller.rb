@@ -50,7 +50,13 @@ class ChargesController < ApplicationController
       flash[:error] = e.message
     else
       @order.update_status('Completed')
-      flash.notice = "Your order is successfull"
+      if current_user
+        @order.obscure_identifier = Encryptor.obscure_details(current_user.email, Time.now)
+      else
+        @order.obscure_identifier = Encryptor.obscure_details(cookies[:guest_email], Time.now)
+      end
+      @order.save
+      flash.notice = "Your order is successful"
       remove_cookie_order_id(@order)
       # UserMailer.order_email(current_user, current_user.orders.last).deliver
     end

@@ -14,7 +14,7 @@ DinnerDash::Application.routes.draw do
   get "logout" => "user_sessions#destroy"
   get "login_options" => "user_sessions#options", as: "login_options"
   post "submit_guest" => "user_sessions#submit_guest", as: "submit_guest"
-  post "login_to_checkout" => 'user_sessions#login_to_checkout'
+  post "login" => 'user_sessions#create'
 
   post "checkout/:id" => "orders#checkout", as: 'checkout'
   get "checkout/:id" => "orders#checkout"
