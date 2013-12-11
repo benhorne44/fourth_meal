@@ -17,11 +17,16 @@ class RestaurantsController < ApplicationController
   def create
     restaurant = Restaurant.new(restaurant_params)
     if restaurant.save
-      redirect_to restaurant_path(restaurant)
+      flash.notice = "Your new restaurant has been submitted"
+      redirect_to restaurant_dashboard_path(restaurant)
     else
       flash.notice = "There was an error"
       redirect_to :back
     end
+  end
+
+  def dashboard
+    @restaurant = Restaurant.find(params[:id])
   end
 
   private
