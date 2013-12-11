@@ -3,18 +3,20 @@
 
     <%= render partial: "order", collection: @orders %>
 
-  <%= form_tag charges_all_path do %>
-    <article>
-      <div id="all_orders_total">
-        <h4>Order Total</h4>
-        <h4>$<%= @total %>0</h4>
-      </div>
-    </article>
+  <div id='final-order-total'>
 
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-description="Your Platable Order"
-            data-amount="<%= (@total * 100).to_i %>"></script>
-  <% end %>
+    <%= form_tag charges_all_path do %>
+      <article>
+        <div id="all_orders_total">
+          <h4>Order Total</h4>
+          <h4>$<%= @total %>0</h4>
+        </div>
+      </article>
 
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+              data-description="Your Platable Order"
+              data-amount="<%= (@total * 100).to_i %>"></script>
+    <% end %>
+  </div>
 </div>
