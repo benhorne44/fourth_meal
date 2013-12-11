@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :require_login, except: [:new, :show, :checkout, :checkout_all]
+  before_action :require_login, except: [:new, :show, :checkout, :checkout_all, :completed_order]
   before_action :require_admin, only: [:index]
   before_action :require_user_or_guest, only: [:checkout, :checkout_all]
 
@@ -13,14 +13,14 @@ class OrdersController < ApplicationController
     redirect_to order
   end
 
-  def show
-    if cookies[:order_id]
-      @order = Order.find(cookies[:order_id])
-    elsif params[:id]
-      @order = Order.find(params[:id])
-    end
-    @order_items = @order.order_items
-  end
+  # def show
+  #   if cookies[:order_id]
+  #     @order = Order.find(cookies[:order_id])
+  #   elsif params[:id]
+  #     @order = Order.find(params[:id])
+  #   end
+  #   @order_items = @order.order_items
+  # end
 
   def checkout
     if cookies[:order_ids].to_s.split(",").include? params[:id].to_s
@@ -49,5 +49,9 @@ class OrdersController < ApplicationController
     cookies.delete :order_id
     UserMailer.order_email(current_user, current_user.orders.last).deliver
     redirect_to user_path(current_user)
+  end
+
+  def completed_order
+    @orders = Order.where(obscure_identifier: params[:id])
   end
 end

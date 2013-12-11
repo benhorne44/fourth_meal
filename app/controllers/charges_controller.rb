@@ -20,7 +20,16 @@ class ChargesController < ApplicationController
     rescue Stripe::CardError => e
       flash[:error] = e.message
     else
-      @orders.each {|order| order.update_status('Completed')}
+      timestamp = Time.now
+      @orders.each do |order| 
+        order.update_status('Completed')
+        if current_user
+          order.obscure_identifier = Encryptor.obscure_details(current_user.email, timestamp)
+        else
+          order.obscure_identifier = Encryptor.obscure_details(cookies[:guest_email], timestamp)
+        end
+        order.save
+      end
       flash.notice = "Your order is successfull"
       cookies.delete :order_ids
       cookies.delete :guest_email
@@ -60,7 +69,7 @@ class ChargesController < ApplicationController
       remove_cookie_order_id(@order)
       # UserMailer.order_email(current_user, current_user.orders.last).deliver
     end
-    redirect_to root_path
+    redirect_to completed_order_path(@order.obscure_identifier)
   end
 
 end
