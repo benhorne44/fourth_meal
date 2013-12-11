@@ -23,6 +23,7 @@ class ChargesController < ApplicationController
       @orders.each {|order| order.update_status('Completed')}
       flash.notice = "Your order is successfull"
       cookies.delete :order_ids
+      cookies.delete :guest_email
       #UserMailer.order_email(current_user, current_user.orders.last).deliver
     end
     redirect_to root_path
