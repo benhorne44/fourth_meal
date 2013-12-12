@@ -1,5 +1,4 @@
 require './test/test_helper'
-require 'pry'
 class CanPlaceOrderTest < Capybara::Rails::TestCase
 
   test "can add an item to the current order" do
