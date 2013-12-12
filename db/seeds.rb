@@ -1,4 +1,3 @@
-
 require 'open-uri'
 require 'csv'
 
@@ -9,7 +8,9 @@ usr.save
 User.create({username: 'bob', email: 'bob@example.com', password: 'password'})
 
 restaurant = Restaurant.create(name: "Platable", location: "123 Fake St", phone_number: "123-456-7890")
-
+restaurant.published = true
+restaurant.active = true
+restaurant.save
 
 plates = Category.create(name: "Plates")
 snacks = Category.create(name: "Snacks")
@@ -161,6 +162,9 @@ desserts.items << coco_cake
 # _______________ WTPHO _______________________
 
 restaurant2 = Restaurant.create(name: "WTPHO", location: "456 Not Real Ave", phone_number: "456-123-7890")
+restaurant2.published = true
+restaurant2.active = true
+restaurant2.save
 images = File.open "./app/assets/images"
 
 contents = CSV.open "./db/wtpho.csv", headers: true, header_converters: :symbol

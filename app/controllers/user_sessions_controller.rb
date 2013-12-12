@@ -1,7 +1,12 @@
 class UserSessionsController < ApplicationController
 
   def new
-    cookies[:return_to] = request.referer
+    # cookies[:return_to] = request.referer
+    if current_user
+      redirect_to user_path(current_user)
+    else  
+      cookies[:return_to] = request.referer
+    end
   end
 
   def create
@@ -17,17 +22,21 @@ class UserSessionsController < ApplicationController
       redirect_to cookies[:return_to]
     else
       flash.notice = "Login failed"
-      redirect_to login_path
+      redirect_to :back
     end
   end
 
   def destroy
     logout
     flash.notice = "Logged out"
+    unset_guest
     redirect_to root_path
   end
 
   def options
+    if current_user
+      redirect_to user_path(current_user)
+    end
   end
 
   def submit_guest
