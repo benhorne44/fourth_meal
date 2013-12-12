@@ -18,6 +18,7 @@ class RestaurantsController < ApplicationController
     restaurant = Restaurant.new(restaurant_params)
     if restaurant.save
       flash.notice = "Your new restaurant has been submitted"
+      Job.create_new(restaurant, current_user, 'owner')
       redirect_to restaurant_dashboard_path(restaurant)
     else
       flash.notice = "There was an error"
@@ -27,6 +28,7 @@ class RestaurantsController < ApplicationController
 
   def dashboard
     @restaurant = Restaurant.find(params[:id])
+    redirect_to root_path unless @restaurant.owners.include? current_user
   end
 
   private

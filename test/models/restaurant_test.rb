@@ -12,4 +12,15 @@ class RestaurantTest < ActiveSupport::TestCase
 
      refute restaurant.published
    end
+
+   test "a restaurant can return it's owner" do
+     user = FactoryGirl.create(:user)
+     role = FactoryGirl.create(:role)
+     restaurant = FactoryGirl.create(:restaurant)
+     job = FactoryGirl.create(:job)
+     user.jobs << job
+     role.jobs << job
+     restaurant.jobs << job
+     assert_equal [user], restaurant.owners
+   end
 end

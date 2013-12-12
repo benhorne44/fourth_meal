@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211223908) do
+ActiveRecord::Schema.define(version: 20131212021538) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 20131211223908) do
 
   add_index "items", ["restaurant_id"], name: "index_items_on_restaurant_id"
 
+  create_table "jobs", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "restaurant_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "jobs", ["restaurant_id"], name: "index_jobs_on_restaurant_id"
+  add_index "jobs", ["role_id"], name: "index_jobs_on_role_id"
+  add_index "jobs", ["user_id"], name: "index_jobs_on_user_id"
+
   create_table "order_items", force: true do |t|
     t.integer  "order_id"
     t.integer  "item_id"
@@ -62,18 +74,6 @@ ActiveRecord::Schema.define(version: 20131211223908) do
   end
 
   add_index "orders", ["restaurant_id"], name: "index_orders_on_restaurant_id"
-
-  create_table "restaurant_user_roles", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "restaurant_id"
-    t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "restaurant_user_roles", ["restaurant_id"], name: "index_restaurant_user_roles_on_restaurant_id"
-  add_index "restaurant_user_roles", ["role_id"], name: "index_restaurant_user_roles_on_role_id"
-  add_index "restaurant_user_roles", ["user_id"], name: "index_restaurant_user_roles_on_user_id"
 
   create_table "restaurants", force: true do |t|
     t.string   "name"

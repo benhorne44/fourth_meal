@@ -1,5 +1,5 @@
 class Role < ActiveRecord::Base
-  has_many :users, through: :restaurant_user_roles
-  has_many :restaurants, through: :restaurant_user_roles
-  has_many :restaurant_user_roles
+  has_many :users, through: :jobs
+  has_many :restaurants, through: :jobs
+  has_many :jobs
 end
