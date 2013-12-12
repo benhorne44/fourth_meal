@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211022605) do
+ActiveRecord::Schema.define(version: 20131212021538) do
 
 
   create_table "categories", force: true do |t|
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(version: 20131211022605) do
 
   add_index "items", ["restaurant_id"], name: "index_items_on_restaurant_id", using: :btree
 
+  create_table "jobs", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "restaurant_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "jobs", ["restaurant_id"], name: "index_jobs_on_restaurant_id"
+  add_index "jobs", ["role_id"], name: "index_jobs_on_role_id"
+  add_index "jobs", ["user_id"], name: "index_jobs_on_user_id"
+
   create_table "order_items", force: true do |t|
     t.integer  "order_id"
     t.integer  "item_id"
@@ -79,6 +91,12 @@ ActiveRecord::Schema.define(version: 20131211022605) do
     t.integer  "zipcode"
     t.boolean  "active",       default: false
     t.boolean  "published",    default: false
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

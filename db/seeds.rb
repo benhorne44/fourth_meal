@@ -186,3 +186,5 @@ ItemCategory.create([{ item_id: 9, category_id: category.id},
                       { item_id: 12, category_id: category.id},
                       { item_id: 38, category_id: category.id}])
 
+Role.create(name: 'owner')
+Role.create(name: 'stocker')
