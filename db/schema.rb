@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20131212021538) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -48,7 +45,7 @@ ActiveRecord::Schema.define(version: 20131212021538) do
     t.integer  "restaurant_id"
   end
 
-  add_index "items", ["restaurant_id"], name: "index_items_on_restaurant_id", using: :btree
+  add_index "items", ["restaurant_id"], name: "index_items_on_restaurant_id"
 
   create_table "jobs", force: true do |t|
     t.integer  "user_id"
@@ -70,8 +67,8 @@ ActiveRecord::Schema.define(version: 20131212021538) do
     t.integer  "quantity",   default: 1
   end
 
-  add_index "order_items", ["item_id"], name: "index_order_items_on_item_id", using: :btree
-  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
+  add_index "order_items", ["item_id"], name: "index_order_items_on_item_id"
+  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id"
 
   create_table "orders", force: true do |t|
     t.integer  "user_id"
@@ -82,7 +79,7 @@ ActiveRecord::Schema.define(version: 20131212021538) do
     t.string   "obscure_identifier"
   end
 
-  add_index "orders", ["restaurant_id"], name: "index_orders_on_restaurant_id", using: :btree
+  add_index "orders", ["restaurant_id"], name: "index_orders_on_restaurant_id"
 
   create_table "restaurants", force: true do |t|
     t.string   "name"
