@@ -7,12 +7,11 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: "Welcome to Platable")
   end
 
-  def order_email(user, order)
-    @user = user
+  def order_email(user_email, order)
     @order = order
     @items = order.items
-    @url = "platable.herokuapp.com"
+    @url = "localhost:3000/#{order.obscure_identifier}"
     @order_details
-    mail(to: @user.email, subject: "Your Grub is Forthcoming!")
+    mail(to: user_email, subject: "Your Grub is Forthcoming!")
   end
 end
