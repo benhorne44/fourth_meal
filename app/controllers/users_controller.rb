@@ -44,6 +44,7 @@ class UsersController < ApplicationController
         order.save
       end
       flash.notice = "User #{@user.username} created!"
+      unset_guest
       # UserMailer.welcome_email(@user).deliver
       redirect_to root_path
     else
@@ -72,6 +73,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:username, :email, :password)
+  end
+  
+  def unset_guest
+    cookies.delete :guest_email unless cookies[:guest_email].blank?
   end
 
 end

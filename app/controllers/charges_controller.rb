@@ -35,7 +35,7 @@ class ChargesController < ApplicationController
       cookies.delete :guest_email
       #UserMailer.order_email(current_user, current_user.orders.last).deliver
     end
-    redirect_to root_path
+    redirect_to completed_order_path(@orders.first.obscure_identifier)
   end
 
   def create
@@ -67,6 +67,7 @@ class ChargesController < ApplicationController
       @order.save
       flash.notice = "Your order is successful"
       remove_cookie_order_id(@order)
+      cookies.delete :guest_email 
       # UserMailer.order_email(current_user, current_user.orders.last).deliver
     end
     redirect_to completed_order_path(@order.obscure_identifier)
