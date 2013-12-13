@@ -26,14 +26,14 @@
                   </td>
                   <td></td>
 
-                  <td>$ <%= item.price %></td>
+                  <td><%= print_price(item.price) %></td>
 
                   <td></td>
                   <td>
                     <%= order_item(order,item).quantity %>
 
                   </td>
-                  <td>$ <%= order_item(order,item).subtotal %></td>
+                  <td><%= print_price(order_item(order,item).subtotal) %></td>
                 </div>
 
               </tr>
@@ -48,7 +48,7 @@
         </div>
 
         <div class='order-subtotal'>
-          <h3>Subtotal: $ <%= order.subtotal %></h3>
+          <h3>Subtotal: <%= print_price(order.subtotal) %></h3>
         </div>
 
       </div>

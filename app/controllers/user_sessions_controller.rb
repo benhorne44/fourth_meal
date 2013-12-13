@@ -1,15 +1,17 @@
 class UserSessionsController < ApplicationController
 
   def new
-    # cookies[:return_to] = request.referer
     if current_user
       redirect_to user_path(current_user)
-    else  
+    else
       cookies[:return_to] = request.referer
     end
   end
 
+
+
   def create
+
     if login(params[:username], params[:password])
       order_ids = cookies[:order_ids].to_s.split(',')
       orders = Order.find_all(order_ids)
