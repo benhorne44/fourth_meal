@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def print_price(price)
-    number_to_currency price
+    number_to_currency(price/100.00)
   end
 
   def login_status
@@ -19,7 +19,7 @@ module ApplicationHelper
       end
     else
       0
-    end 
+    end
   end
 
 end
