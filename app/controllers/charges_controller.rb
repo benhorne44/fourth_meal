@@ -69,7 +69,7 @@ class ChargesController < ApplicationController
       remove_cookie_order_id(@order)
       recipient_email = current_user ? current_user.email : cookies[:guest_email]
       # UserMailer.order_email(recipient_email, @order).deliver
-      Resque.enqueue(OrderEmail, "hello", 1)
+      # Resque.enqueue(OrderEmail, "hello", 1)
       cookies.delete :guest_email
     end
     redirect_to completed_order_path(@order.obscure_identifier)

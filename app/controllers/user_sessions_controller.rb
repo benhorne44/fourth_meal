@@ -17,6 +17,9 @@ class UserSessionsController < ApplicationController
         order.user_id = current_user.id
         order.save
       end
+      saved_orders = current_user.orders.where(status: "saved")
+      saved_order_ids = saved_orders.map { |order| order.id }
+      cookies[:order_ids] = (order_ids + saved_order_ids).join(',')
       unset_guest
       flash.notice = "Successfully logged in as #{current_user.username}"
       redirect_to cookies[:return_to]
@@ -27,7 +30,14 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
+    order_ids = cookies[:order_ids].to_s.split(',')
+    orders = Order.find_all(order_ids)
+    orders.each do |order|
+      order.status = "saved"
+      order.save
+    end
     logout
+    cookies.delete :order_ids
     flash.notice = "Logged out"
     unset_guest
     redirect_to root_path
