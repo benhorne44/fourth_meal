@@ -56,7 +56,11 @@ class ItemsController < ApplicationController
     item = Item.find(params[:id])
     restaurant = item.restaurant
     order = restaurant.find_or_create_new_order(cookies[:order_ids])
-
+    if current_user
+      order.user_id = current_user.id
+      order.save
+    end
+    # fail
     if cookies[:order_ids].blank?
       cookies[:order_ids] = order.id.to_s
     else

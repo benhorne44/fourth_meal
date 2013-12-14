@@ -67,8 +67,10 @@ class ChargesController < ApplicationController
       @order.save
       flash.notice = "Your order is successful"
       remove_cookie_order_id(@order)
+      recipient_email = current_user ? current_user.email : cookies[:guest_email]
+      # UserMailer.order_email(recipient_email, @order).deliver
+      # Resque.enqueue(OrderEmail, "hello", 1)
       cookies.delete :guest_email
-      # UserMailer.order_email(current_user, current_user.orders.last).deliver
     end
     redirect_to completed_order_path(@order.obscure_identifier)
   end

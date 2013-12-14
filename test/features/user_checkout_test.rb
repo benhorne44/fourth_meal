@@ -9,9 +9,9 @@ class UserCheckoutTest < Capybara::Rails::TestCase
     within("#item_1") do
       click_on 'Add to Order'
     end
-
-    click_on "Order"
-
+    within('.controls') do
+      click_on "Order"
+    end
     within("#order_1") do
       click_on "Checkout"
     end
@@ -37,9 +37,9 @@ class UserCheckoutTest < Capybara::Rails::TestCase
     click_button "Login"
 
     visit root_path
-
-    click_on "Order"
-
+    within('.controls') do
+      click_on "Order"
+    end
     within("#order_1") do
       click_on "Checkout"
     end

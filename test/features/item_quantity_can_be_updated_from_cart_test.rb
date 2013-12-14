@@ -13,7 +13,9 @@ class ItemQuantityCanBeUpdatedFromOrderTest < Capybara::Rails::TestCase
     end
     assert_content page, "Beans"
 
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     within("#item_1") do
       fill_in "order_item_quantity", with: 10
       click_on "Update Quantity"
