@@ -58,8 +58,6 @@ class UserSessionsController < ApplicationController
     redirect_to cookies[:return_to]
   end
 
-
-
   def unset_guest
     cookies.delete :guest_email unless cookies[:guest_email].blank?
   end
