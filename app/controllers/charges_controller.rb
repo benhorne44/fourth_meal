@@ -3,7 +3,7 @@ class ChargesController < ApplicationController
   def charges_all
     order_ids = cookies[:order_ids].to_s.split(',')
     @orders = Order.find(order_ids)
-    @total = @orders.inject(0) { |total, order| total + order.subtotal} * 100
+    @total = @orders.inject(0) { |total, order| total + order.subtotal}
 
 
     customer = Stripe::Customer.create(
@@ -13,7 +13,7 @@ class ChargesController < ApplicationController
     begin
       charge = Stripe::Charge.create(
         :customer    => customer.id,
-        :amount      => @total.to_i,
+        :amount      => @total,
         :description => 'Rails Stripe customer',
         :currency    => 'usd'
       )
@@ -21,7 +21,7 @@ class ChargesController < ApplicationController
       flash[:error] = e.message
     else
       timestamp = Time.now
-      @orders.each do |order| 
+      @orders.each do |order|
         order.update_status('Completed')
         if current_user
           order.obscure_identifier = Encryptor.obscure_details(current_user.email, timestamp)
@@ -42,7 +42,7 @@ class ChargesController < ApplicationController
     # Amount in cents
     order_id = ([params[:id].to_s] & cookies[:order_ids].to_s.split(',')).first
     @order = Order.find(order_id)
-    @amount = @order.subtotal * 100
+    @amount = @order.subtotal
 
     customer = Stripe::Customer.create(
       :email => 'example@stripe.com',
@@ -51,7 +51,7 @@ class ChargesController < ApplicationController
     begin
       charge = Stripe::Charge.create(
         :customer    => customer.id,
-        :amount      => @amount.to_i,
+        :amount      => @amount,
         :description => 'Rails Stripe customer',
         :currency    => 'usd'
       )
