@@ -42,9 +42,6 @@ class Order < ActiveRecord::Base
   end
 
   def self.update_orders(new_orders, old_orders)
-    # find any pairs of orders for same restaurant
-    # add old order deets to new order
-    # return new order id
     new_orders.each do |order|
       matched_order = old_orders.select { |o| o.restaurant_id == order.restaurant_id }
       if matched_order.first
