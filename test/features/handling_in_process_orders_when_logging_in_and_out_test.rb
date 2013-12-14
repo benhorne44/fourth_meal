@@ -29,7 +29,9 @@ class HandlingInProcessOrdersWhenLoggingInAndOutTest < Capybara::Rails::TestCase
     end
     log_in
     click_on "Logout"
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     assert_content page, "Your Order is empty."
   end
 

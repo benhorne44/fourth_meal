@@ -3,6 +3,7 @@ require_relative '../test_helper'
 class OrdersControllerTest < ActionController::TestCase
 
   test "it stores order in cookie" do
+    skip
     # 1. if there is an order stored in this cookie
     # 2. then add the associated item to that order
     # 3. otherwise, create a new order and store in cookie

@@ -4,7 +4,7 @@ class UserSessionsController < ApplicationController
     # cookies[:return_to] = request.referer
     if current_user
       redirect_to user_path(current_user)
-    else  
+    else
       cookies[:return_to] = request.referer
     end
   end
@@ -53,8 +53,6 @@ class UserSessionsController < ApplicationController
     cookies[:guest_email] = params[:email]
     redirect_to cookies[:return_to]
   end
-
-
 
   def unset_guest
     cookies.delete :guest_email unless cookies[:guest_email].blank?

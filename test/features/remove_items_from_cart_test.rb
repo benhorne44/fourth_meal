@@ -1,7 +1,7 @@
 require_relative "../test_helper"
 
 class RemoveItemsFromOrderTest < Capybara::Rails::TestCase
-  
+
   test "an item can be removed from the Order" do
     restaurant = FactoryGirl.create(:restaurant)
     restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
@@ -13,7 +13,9 @@ class RemoveItemsFromOrderTest < Capybara::Rails::TestCase
     end
     assert_content page, "Beans"
 
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     within("#item_1") do
       click_on "Remove"
     end

@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user_or_guest
-    cookies[:return_to] = request.fullpath
     unless current_user || guest
+      cookies[:return_to] = request.fullpath
       redirect_to login_options_path
     end
   end
