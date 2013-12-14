@@ -71,24 +71,91 @@ class HandlingInProcessOrdersWhenLoggingInAndOutTest < Capybara::Rails::TestCase
     within('#login_button') do
       click_button "checkout_login_button"
     end
-    click_on "Order"
+    save_and_open_page
+    within('.controls') do
+      click_on "Order"
+    end
     assert_content page, "Beans"
   end
 
+  test "saved and current orders for the same item are updated correctly when user logs in" do
+    restaurant = FactoryGirl.create(:restaurant)
+    restaurant.items.create(title: "Beans", price: 500, description: "Beans, beans, beans!")
+    restaurant2 = FactoryGirl.create(:restaurant, name: "Ben's Beans")
+    restaurant2.items.create(title: "Waffles", price: 500, description: "Waffles, waffles, waffles!")
+    visit restaurant_path(restaurant)
+    within('#item_1') do
+      click_on "Add to Order"
+    end
+    within('#item_1') do
+      click_on "Add to Order"
+    end
+    visit restaurant_path(restaurant2)
+    within('#item_2') do
+      click_on "Add to Order"
+    end
+    log_in
+    click_on "Logout"
+    visit restaurant_path(restaurant)
+    within('#item_1') do
+      click_on "Add to Order"
+    end
+    within('.controls') do
+      click_on "Login"
+    end
+    fill_in "Username", with: 'Banjo Billy'
+    fill_in "Password", with: 'password'
+    within('#login_button') do
+      click_button "checkout_login_button"
+    end
+    within('.controls') do
+      click_on "Order"
+    end
+    within("#order_3") do
+      assert_content page, "Will's Waffles"
+      assert_content page, "Beans"
+    end
+    within("#order_2") do
+      assert_content page, "Ben's Beans"
+      assert_content page, "Waffles"
+    end
+    click_on "Logout"
+    visit restaurant_path(restaurant)
+    within('#item_1') do
+      click_on "Add to Order"
+    end
+    visit restaurant_path(restaurant2)
+    within('#item_2') do
+      click_on "Add to Order"
+    end
+    within('.controls') do
+      click_on "Login"
+    end
+    fill_in "Username", with: 'Banjo Billy'
+    fill_in "Password", with: 'password'
+    within('#login_button') do
+      click_button "checkout_login_button"
+    end
+    assert_content page, "You have unpurchased items from a previous visit, your current order has been updated."
+    within('.controls') do
+      click_on "Order"
+    end
+  end
+
   def log_in
-    @user = User.new
-    @user.username = 'Banjo Billy'
-    @user.password = 'password'
-    @user.email = 'user@example.com'
-    @user.save
+    # @user = User.new
+    # @user.username = 'Banjo Billy'
+    # @user.password = 'password'
+    # @user.email = 'user@example.com'
+    # @user.save
 
     visit root_path
     click_on "Login"
     click_on "Create an Account"
 
-    fill_in "Username", with: @user.username
-    fill_in "Password", with: @user.password
-    fill_in "Email", with: @user.email
+    fill_in "Username", with: 'Banjo Billy'
+    fill_in "Password", with: 'password'
+    fill_in "Email", with: 'example@example.com'
     click_button "Create my account"
   end
 end
