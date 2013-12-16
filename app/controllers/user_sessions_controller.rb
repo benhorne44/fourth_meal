@@ -1,11 +1,10 @@
 # require "pry"
 class UserSessionsController < ApplicationController
+  after_action :clear_return_to, only: [:create]
 
   def new
     if current_user
       redirect_to user_path(current_user)
-    else
-      cookies[:return_to] = request.referer
     end
   end
 
@@ -26,7 +25,11 @@ class UserSessionsController < ApplicationController
       if saved_orders
         flash.notice = "You have unpurchased items from a previous visit, your current order has been updated."
       end
-      redirect_to cookies[:return_to]
+      if cookies[:return_to] != ""
+        redirect_to cookies[:return_to]
+      else
+        redirect_to user_path(current_user)
+      end
     else
       flash.notice = "Login failed"
       redirect_to :back
@@ -61,4 +64,16 @@ class UserSessionsController < ApplicationController
   def unset_guest
     cookies.delete :guest_email unless cookies[:guest_email].blank?
   end
+
+  def clear_return_to
+    cookies[:return_to] = nil
+  end
+
+
+
+
+
+
+
+
 end
