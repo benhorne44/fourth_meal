@@ -34,26 +34,6 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
 
 #___________________Restaurant Type 1__________________
 
-  2.times do |n|
-
-    user1 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
-    user2 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
-    user3 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
-    user4 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
-    owner = Role.find_by(name: 'owner')
-
-    restaurant = Restaurant.create(name: "Platable+#{n}", location: "123 Fake St", phone_number: "123-456-7890", region: cities.sample)
-    restaurant.published = true
-    restaurant.active = true
-    # restaurant.jobs.create(user_id: user1.id, role_id: owner.id)
-    # restaurant.jobs.create(user_id: user2.id, role_id: owner.id)
-
-    restaurant.save
-    Job.create_new(restaurant, user1, 'owner')
-    Job.create_new(restaurant, user2, 'owner')
-    Job.create_new(restaurant, user3, 'stocker')
-    Job.create_new(restaurant, user4, 'stocker')
-
     plates = Category.create(name: "Plates")
     snacks = Category.create(name: "Snacks")
     desserts = Category.create(name: "Dessert")
@@ -63,12 +43,35 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
     burgers = Category.create(name: "Burgers")
     brunch = Category.create(name: "Brunch")
 
-    deviled_eggs = Item.new(title: "Deviled Eggs", description: "12 delicious deviled eggs", price: '500', restaurant_id: restaurant.id)
-    deviled_eggs.image = open("https://s3.amazonaws.com/fourth_meal/deviled_eggs.jpg")
-    deviled_eggs.save
+  20.times do |n|
 
-    snacks.items << deviled_eggs
-    plates.items << deviled_eggs
+    # RestaurantBuilder.create(n)
+    Resque.enqueue(RestaurantBuilder, n)
+    # user1 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
+    # user2 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
+    # user3 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
+    # user4 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
+    # owner = Role.find_by(name: 'owner')
+
+    # restaurant = Restaurant.create(name: "Platable+#{n}", location: "123 Fake St", phone_number: "123-456-7890", region: cities.sample)
+    # restaurant.published = true
+    # restaurant.active = true
+    # # restaurant.jobs.create(user_id: user1.id, role_id: owner.id)
+    # # restaurant.jobs.create(user_id: user2.id, role_id: owner.id)
+
+    # restaurant.save
+    # Job.create_new(restaurant, user1, 'owner')
+    # Job.create_new(restaurant, user2, 'owner')
+    # Job.create_new(restaurant, user3, 'stocker')
+    # Job.create_new(restaurant, user4, 'stocker')
+
+
+    # deviled_eggs = Item.new(title: "Deviled Eggs", description: "12 delicious deviled eggs", price: '500', restaurant_id: restaurant.id)
+    # deviled_eggs.image = open("https://s3.amazonaws.com/fourth_meal/deviled_eggs.jpg")
+    # deviled_eggs.save
+
+    # snacks.items << deviled_eggs
+    # plates.items << deviled_eggs
 
     # mac_and_cheese = Item.new(title: "Interstate Mac and Cheese", description: "Creamy Mac and Cheese", price: '500', restaurant_id: restaurant.id)
     # mac_and_cheese.image = open("https://platable.s3.amazonaws.com/items/images/000/000/002/small/mac_and_cheese.jpg")
@@ -204,45 +207,45 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
 
 # _______________ WTPHO _______________________
 
-# 2.times do |n|
+2.times do |n|
 
-#     user5 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
-#     user6 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
-#     user7 = User.create({username: "ricky#{n}", email: "ricky#{n}@example.com", password: 'password'})
-#     user8 = User.create({username: "ricky#{n}", email: "ricky#{n}@example.com", password: 'password'})
+    user5 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
+    user6 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
+    user7 = User.create({username: "ricky#{n}", email: "ricky#{n}@example.com", password: 'password'})
+    user8 = User.create({username: "ricky#{n}", email: "ricky#{n}@example.com", password: 'password'})
 
-#     restaurant2 = Restaurant.create(name: "WTPHO+#{n}", location: "456 Not Real Ave", phone_number: "456-123-7890", region: cities.sample)
-#     restaurant2.published = true
-#     restaurant2.active = true
-#     restaurant2.save
-#     images = File.open "./app/assets/images"
+    restaurant2 = Restaurant.create(name: "WTPHO+#{n}", location: "456 Not Real Ave", phone_number: "456-123-7890", region: cities.sample)
+    restaurant2.published = true
+    restaurant2.active = true
+    restaurant2.save
+    images = File.open "./app/assets/images"
 
-#     restaurant2.save
-#     Job.create_new(restaurant2, user5, 'owner')
-#     Job.create_new(restaurant2, user6, 'owner')
-#     Job.create_new(restaurant2, user7, 'stocker')
-#     Job.create_new(restaurant2, user8, 'stocker')
+    restaurant2.save
+    Job.create_new(restaurant2, user5, 'owner')
+    Job.create_new(restaurant2, user6, 'owner')
+    Job.create_new(restaurant2, user7, 'stocker')
+    Job.create_new(restaurant2, user8, 'stocker')
 
-#     contents = CSV.open "./db/wtpho.csv", headers: true, header_converters: :symbol
+    contents = CSV.open "./db/wtpho.csv", headers: true, header_converters: :symbol
 
-#     contents.each do |row|
+    contents.each do |row|
 
-#       title       = row[:title]
-#       description = row[:description]
-#       price       = row[:price]
-#       category    = row[:category]
-#       image_file_name = row[:image_file_name]
+      title       = row[:title]
+      description = row[:description]
+      price       = row[:price]
+      category    = row[:category]
+      image_file_name = row[:image_file_name]
 
-#       category_object = Category.find_or_create_by(name: category)
-#       item = restaurant2.items.create(title: title, description: description, price: price, image_file_name: image_file_name)
+      category_object = Category.find_or_create_by(name: category)
+      item = restaurant2.items.create(title: title, description: description, price: price, image_file_name: image_file_name)
 
-#       ItemCategory.create(category_id: category_object.id, item_id: item.id)
-#     end
-#     category = Category.create(name: "House Specials")
+      ItemCategory.create(category_id: category_object.id, item_id: item.id)
+    end
+    category = Category.create(name: "House Specials")
 
-#     ItemCategory.create([{ item_id: 9, category_id: category.id},
-#                           { item_id: 10, category_id: category.id},
-#                           { item_id: 16, category_id: category.id},
-#                           { item_id: 12, category_id: category.id},
-#                           { item_id: 38, category_id: category.id}])
-# end
+    ItemCategory.create([{ item_id: 9, category_id: category.id},
+                          { item_id: 10, category_id: category.id},
+                          { item_id: 16, category_id: category.id},
+                          { item_id: 12, category_id: category.id},
+                          { item_id: 38, category_id: category.id}])
+end
