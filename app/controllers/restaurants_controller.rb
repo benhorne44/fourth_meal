@@ -8,7 +8,9 @@ class RestaurantsController < ApplicationController
   def show
     @restaurant = Restaurant.find(params[:id])
     @items = @restaurant.active_items
-    unless @restaurant.active? && @restaurant.published?
+    unless @restaurant.active? && @restaurant.published? ||
+      @restaurant.owners.include? current_user ||
+      current_user.admin?
       redirect_to root_path
     end
   end
