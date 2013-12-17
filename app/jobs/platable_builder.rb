@@ -2,7 +2,7 @@ class PlatableBuilder
 
   @queue = :restaurants
 
-  def self.perform(number)
+  def self.perform(number, city)
     n = number
     user1 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
     user2 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})

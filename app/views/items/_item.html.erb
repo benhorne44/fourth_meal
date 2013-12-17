@@ -1,8 +1,7 @@
 <li id="item_<%= item.id %>" class="item">
   <div class="item-wrapper">
     <% if item.image? %>
-      <img src='/assets/arugula_salad.jpg'>
-      <% image_tag item.image(:small), {:class => "item-show-image"} %><br/>
+      <%= image_tag item.image.url(:small), {:class => "item-show-image"} %><br/>
     <% end %>
     <div class="item-details">
       <a href="<%= item_path item.id %>" class="title"><%= item.title %></a>

@@ -68,7 +68,7 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
 
 
     deviled_eggs = Item.new(title: "Deviled Eggs", description: "12 delicious deviled eggs", price: '500', restaurant_id: restaurant.id)
-    deviled_eggs.image = open("https://s3.amazonaws.com/fourth_meal/classic_burger.jpg")
+    deviled_eggs.image = open("./app/assets/images/deviled_eggs.jpg")
     deviled_eggs.save
 
     snacks.items << deviled_eggs
