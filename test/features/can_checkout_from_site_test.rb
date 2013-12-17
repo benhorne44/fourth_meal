@@ -4,9 +4,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
 
   test "guest is taken correctly to checkout page for individual restaurant" do
     restaurant = FactoryGirl.create(:restaurant)
-    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    restaurant.items.create(title: "Beans", price: 500, description: "Beans beans beans!")
     restaurant2 = FactoryGirl.create(:restaurant, name: "Ben's Beans")
-    restaurant2.items.create(title: "Waffles", price: 5, description: "Waffles waffles waffles!")
+    restaurant2.items.create(title: "Waffles", price: 500, description: "Waffles waffles waffles!")
     visit restaurant_path(restaurant)
     within("#item_1") do
       click_on "Add to Order"
@@ -32,9 +32,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
 
   test "logged in user is taken correctly to checkout page for individual restaurant" do
     restaurant = FactoryGirl.create(:restaurant)
-    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    restaurant.items.create(title: "Beans", price: 500, description: "Beans beans beans!")
     restaurant2 = FactoryGirl.create(:restaurant, name: "Ben's Beans")
-    restaurant2.items.create(title: "Waffles", price: 5, description: "Waffles waffles waffles!")
+    restaurant2.items.create(title: "Waffles", price: 500, description: "Waffles waffles waffles!")
     visit restaurant_path(restaurant)
     within("#item_1") do
       click_on "Add to Order"
@@ -60,9 +60,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
 
   test "guest is taken correctly to checkout page for checkout all" do
     restaurant = FactoryGirl.create(:restaurant)
-    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    restaurant.items.create(title: "Beans", price: 500, description: "Beans beans beans!")
     restaurant2 = FactoryGirl.create(:restaurant, name: "Ben's Beans")
-    restaurant2.items.create(title: "Waffles", price: 5, description: "Waffles waffles waffles!")
+    restaurant2.items.create(title: "Waffles", price: 500, description: "Waffles waffles waffles!")
     visit restaurant_path(restaurant)
     within("#item_1") do
       click_on "Add to Order"
@@ -90,9 +90,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
 
   test "logged in user is taken correctly to checkout page for checkout all" do
     restaurant = FactoryGirl.create(:restaurant)
-    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    restaurant.items.create(title: "Beans", price: 500, description: "Beans beans beans!")
     restaurant2 = FactoryGirl.create(:restaurant, name: "Ben's Beans")
-    restaurant2.items.create(title: "Waffles", price: 5, description: "Waffles waffles waffles!")
+    restaurant2.items.create(title: "Waffles", price: 500, description: "Waffles waffles waffles!")
     visit restaurant_path(restaurant)
     within("#item_1") do
       click_on "Add to Order"
@@ -120,9 +120,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
 
   test "checkout all page displays order total for all restaurants" do
     restaurant = FactoryGirl.create(:restaurant)
-    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    restaurant.items.create(title: "Beans", price: 500, description: "Beans beans beans!")
     restaurant2 = FactoryGirl.create(:restaurant, name: "Ben's Beans")
-    restaurant2.items.create(title: "Waffles", price: 5, description: "Waffles waffles waffles!")
+    restaurant2.items.create(title: "Waffles", price: 500, description: "Waffles waffles waffles!")
     visit restaurant_path(restaurant)
     within("#item_1") do
       click_on "Add to Order"
@@ -136,14 +136,14 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Order"
     end
     click_on "Checkout All"
-     within("#all_orders_total") do
+    within("#all_orders_total") do
       assert_content page, "$10.00"
     end
   end
 
   test "checkout page displays username" do
     restaurant = FactoryGirl.create(:restaurant)
-    restaurant.items.create(title: "Beans", price: 5, description: "Beans beans beans!")
+    restaurant.items.create(title: "Beans", price: 500, description: "Beans beans beans!")
 
     visit restaurant_path(restaurant)
     within("#item_1") do
@@ -180,7 +180,6 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       fill_in "email", with: 'someone@example.com'
     end
     click_button "Continue as Guest"
-    save_and_open_page
   end
 
 end

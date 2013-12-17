@@ -73,7 +73,6 @@ class HandlingInProcessOrdersWhenLoggingInAndOutTest < Capybara::Rails::TestCase
     within('#login_button') do
       click_button "checkout_login_button"
     end
-    save_and_open_page
     within('.controls') do
       click_on "Order"
     end
@@ -138,19 +137,14 @@ class HandlingInProcessOrdersWhenLoggingInAndOutTest < Capybara::Rails::TestCase
     within('#login_button') do
       click_button "checkout_login_button"
     end
-    assert_content page, "You have unpurchased items from a previous visit, your current order has been updated."
     within('.controls') do
       click_on "Order"
     end
+    assert_content page, 'Beans'
+    assert_content page, 'Waffles'
   end
 
   def log_in
-    # @user = User.new
-    # @user.username = 'Banjo Billy'
-    # @user.password = 'password'
-    # @user.email = 'user@example.com'
-    # @user.save
-
     visit root_path
     click_on "Login"
     click_on "Create an Account"

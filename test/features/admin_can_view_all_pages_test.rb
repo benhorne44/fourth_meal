@@ -1,4 +1,5 @@
 require "./test/test_helper"
+require 'pry'
 
 class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
 
@@ -38,6 +39,7 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
 
   test "admin can create item" do
     user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
+    restaurant = FactoryGirl.create(:restaurant)
     user1.admin = true
     user1.save
     user2 = FactoryGirl.create(:user)
@@ -48,7 +50,7 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
     fill_in "Username", with: 'admin'
     fill_in "Password", with: 'password'
     click_button "Login"
-    visit new_item_path
+    visit new_item_path(restaurant)
     fill_in "Title", :with => "deviled eggs"
     fill_in "Description", :with => "12 luscious eggs"
     fill_in "Price", :with => "3"
@@ -60,6 +62,8 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
 
   test "admin can edit an item" do
     @item = Item.create({title: "Burger", description: "Loafy goodness", price: '1'})
+    restaurant = FactoryGirl.create(:restaurant)
+    restaurant.items << @item
     user1 = FactoryGirl.build(:user, {username: 'admin', password: 'password'})
     user1.admin = true
     user1.save
@@ -104,6 +108,8 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
 
   test "categories are prepopulated on edit" do
     item = Item.create({title: "Deviled Eggs", description: "one dozen eggs", price: 5})
+    restaurant = FactoryGirl.create(:restaurant)
+    restaurant.items << item
     category1 = Category.create({name: "Snacks"})
     category2 = Category.create({name: "Lunch"})
     item.categories << category1
@@ -125,6 +131,8 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
 
   test "correct categories are prepopulated on edit" do
     item = Item.create({title: "Deviled Eggs", description: "one dozen eggs", price: 5})
+    restaurant = FactoryGirl.create(:restaurant)
+    restaurant.items << item
     category1 = Category.create({name: "Snacks"})
     category2 = Category.create({name: "Lunch"})
     item.categories << category1
