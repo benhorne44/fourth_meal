@@ -15,7 +15,8 @@ class OrdersController < ApplicationController
 
   # def show
   #   if cookies[:order_id]
-  #     @order = Order.find(cookies[:order_id])
+  #     @order
+  = Order.find(cookies[:order_id])
   #   elsif params[:id]
   #     @order = Order.find(params[:id])
   #   end
@@ -53,6 +54,6 @@ class OrdersController < ApplicationController
 
   def completed_order
     @orders = Order.where(obscure_identifier: params[:id])
-    UserMailer.order_email(current_user.email).deliver
+    # UserMailer.order_email(current_user.email).deliver
   end
 end
