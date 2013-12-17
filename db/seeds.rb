@@ -24,13 +24,13 @@ end
 cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ",
   "Philadelphia, PA", "San Antonio, TX", "San Diego, CA", "Dallas, TX", "San Jose, CA",
   "Detroit, MI", "San Francisco, CA", "Jacksonville, FL", "Indianapolis, IN", "Austin, TX",
-  "Columbus, OH", "Fort Worth, TX", "Charlotte, NC", "Memphis, TN", "Boston, MA", "Baltimore, MD", 
+  "Columbus, OH", "Fort Worth, TX", "Charlotte, NC", "Memphis, TN", "Boston, MA", "Baltimore, MD",
   "El Paso, TX", "Seattle, WA", "Denver, CO", "Nashville-Davidson, TN", "Milwaukee, WI", "Washington, DC",
   "Las Vegas, NV", "Louisville/Jefferson County, KY", "Portland, OR", "Oklahoma City, OK", "Tucson, AZ",
-  "Atlanta, GA", "Albuquerque, NM", "Kansas City, MO", "Fresno, CA", "Mesa, AZ", "Sacramento, CA", 
-  "Long Beach, CA", "Omaha, NE", "Virginia Beach, VA", "Miami, FL", "Cleveland, OH", "Oakland, CA", 
+  "Atlanta, GA", "Albuquerque, NM", "Kansas City, MO", "Fresno, CA", "Mesa, AZ", "Sacramento, CA",
+  "Long Beach, CA", "Omaha, NE", "Virginia Beach, VA", "Miami, FL", "Cleveland, OH", "Oakland, CA",
   "Raleigh, NC", "Colorado Springs, CO", "Tulsa, OK", "Minneapolis, MN", "Arlington, TX", "Honolulu, HI",
-  "Wichita, KS"] 
+  "Wichita, KS"]
 
 #___________________Restaurant Type 1__________________
 
@@ -64,7 +64,7 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
     brunch = Category.create(name: "Brunch")
 
     deviled_eggs = Item.new(title: "Deviled Eggs", description: "12 delicious deviled eggs", price: '500', restaurant_id: restaurant.id)
-    deviled_eggs.image = open("https://platable.s3.amazonaws.com/items/images/000/000/001/small/deviled_eggs.jpg")
+    deviled_eggs.image = open("https://s3.amazonaws.com/fourth_meal/deviled_eggs.jpg")
     deviled_eggs.save
 
     snacks.items << deviled_eggs
