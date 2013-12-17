@@ -1,194 +1,248 @@
 require 'open-uri'
 require 'csv'
+require 'thread'
 
-usr = User.new({username: 'wvmitchell', email: 'wvmitchell@gmail.com', password: 'password'})
-usr.admin = true
-usr.save
+# ___________________Platform Admin___________________
 
-User.create({username: 'bob', email: 'bob@example.com', password: 'password'})
+admin = User.new({username: 'wvmitchell', email: 'wvmitchell@gmail.com', password: 'password'})
+admin.admin = true
+admin.save
 
-restaurant = Restaurant.create(name: "Platable", location: "123 Fake St", phone_number: "123-456-7890")
-restaurant.published = true
-restaurant.active = true
-restaurant.save
+admin2 = User.new({username: 'louisa', email: 'louisabarrett@gmail.com', password: 'password'})
+admin2.admin = true
+admin2.save
 
-plates = Category.create(name: "Plates")
-snacks = Category.create(name: "Snacks")
-desserts = Category.create(name: "Dessert")
-soups = Category.create(name: "Soups")
-salads = Category.create(name: "Salads")
-sandwiches = Category.create(name: "Sandwiches")
-burgers = Category.create(name: "Burgers")
-brunch = Category.create(name: "Brunch")
+#___________________Roles_______________________
 
-deviled_eggs = Item.new(title: "Deviled Eggs", description: "12 delicious deviled eggs", price: '500', restaurant_id: restaurant.id)
-deviled_eggs.image = open("https://platable.s3.amazonaws.com/items/images/000/000/001/small/deviled_eggs.jpg")
-deviled_eggs.save
+role_types = ['owner', 'stocker']
+role_types.each do |role|
+  Role.create(name: role)
+end
 
-snacks.items << deviled_eggs
-plates.items << deviled_eggs
+#___________________cities_________________
 
-mac_and_cheese = Item.new(title: "Interstate Mac and Cheese", description: "Creamy Mac and Cheese", price: '500', restaurant_id: restaurant.id)
-mac_and_cheese.image = open("https://platable.s3.amazonaws.com/items/images/000/000/002/small/mac_and_cheese.jpg")
-mac_and_cheese.save
+cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ",
+  "Philadelphia, PA", "San Antonio, TX", "San Diego, CA", "Dallas, TX", "San Jose, CA",
+  "Detroit, MI", "San Francisco, CA", "Jacksonville, FL", "Indianapolis, IN", "Austin, TX",
+  "Columbus, OH", "Fort Worth, TX", "Charlotte, NC", "Memphis, TN", "Boston, MA", "Baltimore, MD", 
+  "El Paso, TX", "Seattle, WA", "Denver, CO", "Nashville-Davidson, TN", "Milwaukee, WI", "Washington, DC",
+  "Las Vegas, NV", "Louisville/Jefferson County, KY", "Portland, OR", "Oklahoma City, OK", "Tucson, AZ",
+  "Atlanta, GA", "Albuquerque, NM", "Kansas City, MO", "Fresno, CA", "Mesa, AZ", "Sacramento, CA", 
+  "Long Beach, CA", "Omaha, NE", "Virginia Beach, VA", "Miami, FL", "Cleveland, OH", "Oakland, CA", 
+  "Raleigh, NC", "Colorado Springs, CO", "Tulsa, OK", "Minneapolis, MN", "Arlington, TX", "Honolulu, HI",
+  "Wichita, KS"] 
 
-snacks.items << mac_and_cheese
+#___________________Restaurant Type 1__________________
 
-spoon_bread = Item.new(title: "Spoon Bread", description: "Warm bread with butter, honey, and bacon", price: '700', restaurant_id: restaurant.id)
-spoon_bread.image = open("https://platable.s3.amazonaws.com/items/images/000/000/003/small/spoon_bread1.jpg")
-spoon_bread.save
+  2.times do |n|
 
-snacks.items << spoon_bread
+    user1 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
+    user2 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
+    user3 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
+    user4 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
+    owner = Role.find_by(name: 'owner')
 
-tomato_soup = Item.new(title: "Tomato Soup", description: "Roasted tomato soup with oozy grilled cheese", price: '600', restaurant_id: restaurant.id)
-tomato_soup.image = open("https://platable.s3.amazonaws.com/items/images/000/000/004/small/tomato_soup.jpg")
-tomato_soup.save
+    restaurant = Restaurant.create(name: "Platable+#{n}", location: "123 Fake St", phone_number: "123-456-7890", region: cities.sample)
+    restaurant.published = true
+    restaurant.active = true
+    # restaurant.jobs.create(user_id: user1.id, role_id: owner.id)
+    # restaurant.jobs.create(user_id: user2.id, role_id: owner.id)
 
-soups.items << tomato_soup
+    restaurant.save
+    Job.create_new(restaurant, user1, 'owner')
+    Job.create_new(restaurant, user2, 'owner')
+    Job.create_new(restaurant, user3, 'stocker')
+    Job.create_new(restaurant, user4, 'stocker')
 
-green_bean_salad = Item.new(title: "Green Bean Salad", description: "Fresh green beans with goat cheese and pecans", price: '800', restaurant_id: restaurant.id)
-green_bean_salad.image = open("https://platable.s3.amazonaws.com/items/images/000/000/005/small/green_beans.jpg")
-green_bean_salad.save
+    plates = Category.create(name: "Plates")
+    snacks = Category.create(name: "Snacks")
+    desserts = Category.create(name: "Dessert")
+    soups = Category.create(name: "Soups")
+    salads = Category.create(name: "Salads")
+    sandwiches = Category.create(name: "Sandwiches")
+    burgers = Category.create(name: "Burgers")
+    brunch = Category.create(name: "Brunch")
 
-salads.items << green_bean_salad
+    deviled_eggs = Item.new(title: "Deviled Eggs", description: "12 delicious deviled eggs", price: '500', restaurant_id: restaurant.id)
+    deviled_eggs.image = open("https://platable.s3.amazonaws.com/items/images/000/000/001/small/deviled_eggs.jpg")
+    deviled_eggs.save
 
-arugula_salad = Item.new(title: "Arugula Salad", description: "Arugula, radish, and sunflower seeds with a zesty lemon vinaigrette", price: '700', restaurant_id: restaurant.id)
-arugula_salad.image = open("https://platable.s3.amazonaws.com/items/images/000/000/006/small/arugula_salad.jpg")
-arugula_salad.save
+    snacks.items << deviled_eggs
+    plates.items << deviled_eggs
 
-salads.items << arugula_salad
+    mac_and_cheese = Item.new(title: "Interstate Mac and Cheese", description: "Creamy Mac and Cheese", price: '500', restaurant_id: restaurant.id)
+    mac_and_cheese.image = open("https://platable.s3.amazonaws.com/items/images/000/000/002/small/mac_and_cheese.jpg")
+    mac_and_cheese.save
 
-cubano_sandwich = Item.new(title: "Cubano Sandwich", description: "Classic cubano sandwich with house-made pickles, mustard, and black beans with rice", price: '900', restaurant_id: restaurant.id)
-cubano_sandwich.image = open("https://platable.s3.amazonaws.com/items/images/000/000/007/small/cubano_sandwich.jpg")
-cubano_sandwich.save
+    snacks.items << mac_and_cheese
 
-sandwiches.items << cubano_sandwich
+    spoon_bread = Item.new(title: "Spoon Bread", description: "Warm bread with butter, honey, and bacon", price: '700', restaurant_id: restaurant.id)
+    spoon_bread.image = open("https://platable.s3.amazonaws.com/items/images/000/000/003/small/spoon_bread1.jpg")
+    spoon_bread.save
 
-monte_cristo = Item.new(title: "Monte Cristo Sandwich", description: "Classic Monte Cristo served with shoestring potatoes", price: '900', restaurant_id: restaurant.id)
-monte_cristo.image = open("https://platable.s3.amazonaws.com/items/images/000/000/008/small/monte_cristo.jpg")
-monte_cristo.save
+    snacks.items << spoon_bread
 
-sandwiches.items << monte_cristo
+    tomato_soup = Item.new(title: "Tomato Soup", description: "Roasted tomato soup with oozy grilled cheese", price: '600', restaurant_id: restaurant.id)
+    tomato_soup.image = open("https://platable.s3.amazonaws.com/items/images/000/000/004/small/tomato_soup.jpg")
+    tomato_soup.save
 
-classic_burger = Item.new(title: "Classic Burger", description: "Burger and fries with your choice of swiss, cheddar, muenster, or provolone", price: '1000', restaurant_id: restaurant.id)
-classic_burger.image = open("https://platable.s3.amazonaws.com/items/images/000/000/009/small/classic_burger.jpg")
-classic_burger.save
+    soups.items << tomato_soup
 
-burgers.items << classic_burger
+    green_bean_salad = Item.new(title: "Green Bean Salad", description: "Fresh green beans with goat cheese and pecans", price: '800', restaurant_id: restaurant.id)
+    green_bean_salad.image = open("https://platable.s3.amazonaws.com/items/images/000/000/005/small/green_beans.jpg")
+    green_bean_salad.save
 
-veggie_burger = Item.new(title: "House Made Veggie Burger", description: "Burger and fries with your choice of swiss, cheddar, muenster, or provolone", price: '1000', restaurant_id: restaurant.id)
-veggie_burger.image = open("https://platable.s3.amazonaws.com/items/images/000/000/010/small/veggie_burger.jpg")
-veggie_burger.save
+    salads.items << green_bean_salad
 
-burgers.items << veggie_burger
+    arugula_salad = Item.new(title: "Arugula Salad", description: "Arugula, radish, and sunflower seeds with a zesty lemon vinaigrette", price: '700', restaurant_id: restaurant.id)
+    arugula_salad.image = open("https://platable.s3.amazonaws.com/items/images/000/000/006/small/arugula_salad.jpg")
+    arugula_salad.save
 
-chicken_fried_chicken = Item.new(title: "Chicken Fried Chicken", description: "Chicken fried chicken, pork belly green beans & country gravy", price: '1500', restaurant_id: restaurant.id)
-chicken_fried_chicken.image = open("https://platable.s3.amazonaws.com/items/images/000/000/011/small/chicken_fried_chicken.jpg")
-chicken_fried_chicken.save
+    salads.items << arugula_salad
 
-plates.items << chicken_fried_chicken
+    cubano_sandwich = Item.new(title: "Cubano Sandwich", description: "Classic cubano sandwich with house-made pickles, mustard, and black beans with rice", price: '900', restaurant_id: restaurant.id)
+    cubano_sandwich.image = open("https://platable.s3.amazonaws.com/items/images/000/000/007/small/cubano_sandwich.jpg")
+    cubano_sandwich.save
 
-seared_ribeye = Item.new(title: "Seared Ribeye", description: "Served with marinated roasted mushrooms", price: '1800', restaurant_id: restaurant.id)
-seared_ribeye.image = open("https://platable.s3.amazonaws.com/items/images/000/000/012/small/seared_ribeye.jpg")
-seared_ribeye.save
+    sandwiches.items << cubano_sandwich
 
-plates.items << seared_ribeye
+    monte_cristo = Item.new(title: "Monte Cristo Sandwich", description: "Classic Monte Cristo served with shoestring potatoes", price: '900', restaurant_id: restaurant.id)
+    monte_cristo.image = open("https://platable.s3.amazonaws.com/items/images/000/000/008/small/monte_cristo.jpg")
+    monte_cristo.save
 
-tacos = Item.new(title: "New Mexican Veggie Street Tacos", description: "Accompanied by smoked mushrooms and roasted squash", price: '1900', restaurant_id: restaurant.id)
-tacos.image = open("https://platable.s3.amazonaws.com/items/images/000/000/013/small/tacos.jpg")
-tacos.save
+    sandwiches.items << monte_cristo
 
-plates.items << tacos
+    classic_burger = Item.new(title: "Classic Burger", description: "Burger and fries with your choice of swiss, cheddar, muenster, or provolone", price: '1000', restaurant_id: restaurant.id)
+    classic_burger.image = open("https://platable.s3.amazonaws.com/items/images/000/000/009/small/classic_burger.jpg")
+    classic_burger.save
 
-pork = Item.new(title: "Confit of Pork Porterhouse", description: "Served over a bed of polenta with braised greens", price: '1600', restaurant_id: restaurant.id)
-pork.image = open("https://platable.s3.amazonaws.com/items/images/000/000/014/small/pork.jpg")
-pork.save
+    burgers.items << classic_burger
 
-plates.items << pork
+    veggie_burger = Item.new(title: "House Made Veggie Burger", description: "Burger and fries with your choice of swiss, cheddar, muenster, or provolone", price: '1000', restaurant_id: restaurant.id)
+    veggie_burger.image = open("https://platable.s3.amazonaws.com/items/images/000/000/010/small/veggie_burger.jpg")
+    veggie_burger.save
 
-grapefruit = Item.new(title: "Sugar Broiled Half Grapefruit", description: "Half a grapefruit topped with dark brown sugar and broiled until crisp", price: '400', restaurant_id: restaurant.id)
-grapefruit.image = open("https://platable.s3.amazonaws.com/items/images/000/000/015/small/grapefruit.jpg")
-grapefruit.save
+    burgers.items << veggie_burger
 
-snacks.items << grapefruit
-brunch.items << grapefruit
+    chicken_fried_chicken = Item.new(title: "Chicken Fried Chicken", description: "Chicken fried chicken, pork belly green beans & country gravy", price: '1500', restaurant_id: restaurant.id)
+    chicken_fried_chicken.image = open("https://platable.s3.amazonaws.com/items/images/000/000/011/small/chicken_fried_chicken.jpg")
+    chicken_fried_chicken.save
 
-coffee_cake = Item.new(title: "Coffee Cake", description: "Walnut and brown sugar crumble coffee cake", price: '400', restaurant_id: restaurant.id)
-coffee_cake.image = open("https://platable.s3.amazonaws.com/items/images/000/000/016/small/coffee_cake.jpg")
-coffee_cake.save
+    plates.items << chicken_fried_chicken
 
-snacks.items << coffee_cake
+    seared_ribeye = Item.new(title: "Seared Ribeye", description: "Served with marinated roasted mushrooms", price: '1800', restaurant_id: restaurant.id)
+    seared_ribeye.image = open("https://platable.s3.amazonaws.com/items/images/000/000/012/small/seared_ribeye.jpg")
+    seared_ribeye.save
 
-hoecakes = Item.new(title: "Sweet Corn Hoecake Platter", description: "Sweet corn hoecake, pulled pork, fried egg, house-made cheese curds, and hash",  price: '1000', restaurant_id: restaurant.id)
-hoecakes.image = open("https://platable.s3.amazonaws.com/items/images/000/000/017/small/hoecakes.jpg")
-hoecakes.save
+    plates.items << seared_ribeye
 
-brunch.items << hoecakes
-plates.items << hoecakes
+    tacos = Item.new(title: "New Mexican Veggie Street Tacos", description: "Accompanied by smoked mushrooms and roasted squash", price: '1900', restaurant_id: restaurant.id)
+    tacos.image = open("https://platable.s3.amazonaws.com/items/images/000/000/013/small/tacos.jpg")
+    tacos.save
 
-french_toast = Item.new(title: "French Toast", description: "Topped with brûléed bananas, whipped cream, and maple syrup",  price: '800', restaurant_id: restaurant.id)
-french_toast.image = open("https://platable.s3.amazonaws.com/items/images/000/000/018/small/french_toast.jpg")
-french_toast.save
+    plates.items << tacos
 
-brunch.items << french_toast
-plates.items << french_toast
+    pork = Item.new(title: "Confit of Pork Porterhouse", description: "Served over a bed of polenta with braised greens", price: '1600', restaurant_id: restaurant.id)
+    pork.image = open("https://platable.s3.amazonaws.com/items/images/000/000/014/small/pork.jpg")
+    pork.save
 
-omelette = Item.new(title: "Freakin’ Denver Omelette", description: "Served with hash and toast",  price: '800', restaurant_id: restaurant.id)
-omelette.image = open("https://platable.s3.amazonaws.com/items/images/000/000/019/small/denver_omelette.jpg")
-omelette.save
+    plates.items << pork
 
-brunch.items << omelette
-plates.items << omelette
+    grapefruit = Item.new(title: "Sugar Broiled Half Grapefruit", description: "Half a grapefruit topped with dark brown sugar and broiled until crisp", price: '400', restaurant_id: restaurant.id)
+    grapefruit.image = open("https://platable.s3.amazonaws.com/items/images/000/000/015/small/grapefruit.jpg")
+    grapefruit.save
 
-trifle = Item.new(title: "Pecan & Mixed Berry Trifle", description: "Pecan and mixed berry trifle topped with whipped cream", price: '700', restaurant_id: restaurant.id)
-trifle.image = open("https://platable.s3.amazonaws.com/items/images/000/000/020/small/trifle.jpg")
-trifle.save
+    snacks.items << grapefruit
+    brunch.items << grapefruit
 
-desserts.items << trifle
+    coffee_cake = Item.new(title: "Coffee Cake", description: "Walnut and brown sugar crumble coffee cake", price: '400', restaurant_id: restaurant.id)
+    coffee_cake.image = open("https://platable.s3.amazonaws.com/items/images/000/000/016/small/coffee_cake.jpg")
+    coffee_cake.save
 
-smores = Item.new(title: "Interstate S'Mores", description: "Graham crackers, marshmallows, and chocolate", price: '700', restaurant_id: restaurant.id)
-smores.image = open("https://platable.s3.amazonaws.com/items/images/000/000/021/small/s'mores.jpg")
-smores.save
+    snacks.items << coffee_cake
 
-desserts.items << smores
+    hoecakes = Item.new(title: "Sweet Corn Hoecake Platter", description: "Sweet corn hoecake, pulled pork, fried egg, house-made cheese curds, and hash",  price: '1000', restaurant_id: restaurant.id)
+    hoecakes.image = open("https://platable.s3.amazonaws.com/items/images/000/000/017/small/hoecakes.jpg")
+    hoecakes.save
 
-coco_cake = Item.new(title: "Coconut Cream Cheese Ice Box Cake", description: "Heaven on a plate", price: '700', restaurant_id: restaurant.id)
-coco_cake.image = open("https://platable.s3.amazonaws.com/items/images/000/000/022/small/coco_cake.jpg")
-coco_cake.save
+    brunch.items << hoecakes
+    plates.items << hoecakes
 
-desserts.items << coco_cake
+    french_toast = Item.new(title: "French Toast", description: "Topped with brûléed bananas, whipped cream, and maple syrup",  price: '800', restaurant_id: restaurant.id)
+    french_toast.image = open("https://platable.s3.amazonaws.com/items/images/000/000/018/small/french_toast.jpg")
+    french_toast.save
+
+    brunch.items << french_toast
+    plates.items << french_toast
+
+    omelette = Item.new(title: "Freakin’ Denver Omelette", description: "Served with hash and toast",  price: '800', restaurant_id: restaurant.id)
+    omelette.image = open("https://platable.s3.amazonaws.com/items/images/000/000/019/small/denver_omelette.jpg")
+    omelette.save
+
+    brunch.items << omelette
+    plates.items << omelette
+
+    trifle = Item.new(title: "Pecan & Mixed Berry Trifle", description: "Pecan and mixed berry trifle topped with whipped cream", price: '700', restaurant_id: restaurant.id)
+    trifle.image = open("https://platable.s3.amazonaws.com/items/images/000/000/020/small/trifle.jpg")
+    trifle.save
+
+    desserts.items << trifle
+
+    smores = Item.new(title: "Interstate S'Mores", description: "Graham crackers, marshmallows, and chocolate", price: '700', restaurant_id: restaurant.id)
+    smores.image = open("https://platable.s3.amazonaws.com/items/images/000/000/021/small/s'mores.jpg")
+    smores.save
+
+    desserts.items << smores
+
+    coco_cake = Item.new(title: "Coconut Cream Cheese Ice Box Cake", description: "Heaven on a plate", price: '700', restaurant_id: restaurant.id)
+    coco_cake.image = open("https://platable.s3.amazonaws.com/items/images/000/000/022/small/coco_cake.jpg")
+    coco_cake.save
+
+    desserts.items << coco_cake
+  end
 
 
 # _______________ WTPHO _______________________
 
-restaurant2 = Restaurant.create(name: "WTPHO", location: "456 Not Real Ave", phone_number: "456-123-7890")
-restaurant2.published = true
-restaurant2.active = true
-restaurant2.save
-images = File.open "./app/assets/images"
+2.times do |n|
 
-contents = CSV.open "./db/wtpho.csv", headers: true, header_converters: :symbol
+    user5 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
+    user6 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
+    user7 = User.create({username: "ricky#{n}", email: "ricky#{n}@example.com", password: 'password'})
+    user8 = User.create({username: "ricky#{n}", email: "ricky#{n}@example.com", password: 'password'})
 
-contents.each do |row|
+    restaurant2 = Restaurant.create(name: "WTPHO+#{n}", location: "456 Not Real Ave", phone_number: "456-123-7890", region: cities.sample)
+    restaurant2.published = true
+    restaurant2.active = true
+    restaurant2.save
+    images = File.open "./app/assets/images"
 
-  title       = row[:title]
-  description = row[:description]
-  price       = row[:price]
-  category    = row[:category]
-  image_file_name = row[:image_file_name]
+    restaurant2.save
+    Job.create_new(restaurant2, user5, 'owner')
+    Job.create_new(restaurant2, user6, 'owner')
+    Job.create_new(restaurant2, user7, 'stocker')
+    Job.create_new(restaurant2, user8, 'stocker')
 
-  category_object = Category.find_or_create_by(name: category)
-  item = restaurant2.items.create(title: title, description: description, price: price, image_file_name: image_file_name)
+    contents = CSV.open "./db/wtpho.csv", headers: true, header_converters: :symbol
 
-  ItemCategory.create(category_id: category_object.id, item_id: item.id)
+    contents.each do |row|
+
+      title       = row[:title]
+      description = row[:description]
+      price       = row[:price]
+      category    = row[:category]
+      image_file_name = row[:image_file_name]
+
+      category_object = Category.find_or_create_by(name: category)
+      item = restaurant2.items.create(title: title, description: description, price: price, image_file_name: image_file_name)
+
+      ItemCategory.create(category_id: category_object.id, item_id: item.id)
+    end
+    category = Category.create(name: "House Specials")
+
+    ItemCategory.create([{ item_id: 9, category_id: category.id},
+                          { item_id: 10, category_id: category.id},
+                          { item_id: 16, category_id: category.id},
+                          { item_id: 12, category_id: category.id},
+                          { item_id: 38, category_id: category.id}])
 end
-category = Category.create(name: "House Specials")
-
-ItemCategory.create([{ item_id: 9, category_id: category.id},
-                      { item_id: 10, category_id: category.id},
-                      { item_id: 16, category_id: category.id},
-                      { item_id: 12, category_id: category.id},
-                      { item_id: 38, category_id: category.id}])
-
-Role.create(name: 'owner')
-Role.create(name: 'stocker')
