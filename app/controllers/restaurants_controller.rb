@@ -14,8 +14,11 @@ class RestaurantsController < ApplicationController
 
       unless @restaurant.active? && @restaurant.published?
         if current_user
-          @restaurant.owners.include?(current_user) or current_user.admin?
-          render :show
+          if @restaurant.owners.include?(current_user) or current_user.admin?
+            render :show
+          else
+            redirect_to root_path
+          end
         else
           redirect_to root_path
         end
