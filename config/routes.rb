@@ -16,6 +16,7 @@ DinnerDash::Application.routes.draw do
   #   get "/dashboard", to: "restaurants#show", as: "restaurant_dashboard"
   # end
 
+  get "new_item/:id" => 'items#new', as: 'new_item'
   post "items/add_to_order/:id" => 'items#add_to_order', as: 'add_item'
 
   get "login" => "user_sessions#new"
