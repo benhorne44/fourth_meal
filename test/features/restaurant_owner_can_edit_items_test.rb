@@ -104,4 +104,32 @@ class RestaurantOwnerCanEditItemsTest < Capybara::Rails::TestCase
     assert_content page, "Status: Inactive"
   end
 
+  test "restaurant owner can visit dashboard from account profile" do
+    FactoryGirl.create(:user)
+    FactoryGirl.create(:role)
+    visit login_path
+
+    fill_in "Username", with: 'big_eater'
+    fill_in "Password", with: 'password'
+
+    within(".form-container") do
+      click_on "Login"
+    end
+
+    click_on "I want to create a restaurant"
+
+    fill_in "Restaurant Name", with: 'Toms Tavern'
+    fill_in "Address", with: '123 Street Street'
+    fill_in "Zipcode", with: '90210'
+    click_on "Submit for approval"
+
+    within(".controls") do
+      click_on "Account"
+    end
+
+    click_on "Toms Tavern Dashboard"
+
+    assert_content page, "Toms Tavern Dashboard"
+  end
+
 end
