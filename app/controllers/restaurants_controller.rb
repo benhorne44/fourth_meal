@@ -6,7 +6,17 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id])
-    @items = @restaurant.active_items
+
+    @categories = @restaurant.items.collect do |item|
+      item.categories
+    end.flatten.uniq
+
+    if params["Categories"]
+      @category = Category.find(params["Categories"])
+      @items = @restaurant.items.find_all {|item| item.categories.include? @category}
+    else
+      @items = @restaurant.active_items
+    end
   end
 
   def new
