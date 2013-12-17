@@ -16,7 +16,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     guest_login
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     within("#order_1") do
       click_on "Checkout"
     end
@@ -42,7 +44,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     log_in
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     within("#order_1") do
       click_on "Checkout"
     end
@@ -68,7 +72,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     guest_login
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     click_on "Checkout All"
     assert_content page, "Review Your Order"
     within("#restaurant_1_order") do
@@ -96,7 +102,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     log_in
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     click_on "Checkout All"
     assert_content page, "Order for #{@user.username}"
     within("#restaurant_1_order") do
@@ -124,7 +132,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
     guest_login
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     click_on "Checkout All"
      within("#all_orders_total") do
       assert_content page, "$10.00"
@@ -141,7 +151,9 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
     end
     log_in
     visit root_path
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     assert_content page, "Logged in as #{@user.username}"
   end
 
@@ -165,9 +177,10 @@ class CanCheckoutFromSiteTest < Capybara::Rails::TestCase
   def guest_login
     visit login_options_path
     within("#guest-checkout") do
-      fill_in "Email", with: 'someone@example.com'
+      fill_in "email", with: 'someone@example.com'
     end
     click_button "Continue as Guest"
+    save_and_open_page
   end
 
 end

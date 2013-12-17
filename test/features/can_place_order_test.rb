@@ -1,5 +1,4 @@
 require './test/test_helper'
-require 'pry'
 class CanPlaceOrderTest < Capybara::Rails::TestCase
 
   test "can add an item to the current order" do
@@ -41,7 +40,9 @@ class CanPlaceOrderTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
 
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     within("#item_1") do
       assert_content page, "Deviled Eggs"
     end
@@ -63,7 +64,9 @@ class CanPlaceOrderTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
 
-    click_on "Order"
+    within('.controls') do
+      click_on "Order"
+    end
     within("#item_1") do
       assert_equal "2", find_field('order_item_quantity').value
     end
@@ -82,7 +85,9 @@ class CanPlaceOrderTest < Capybara::Rails::TestCase
       click_on "Add to Order"
     end
 
-    click_on 'Order'
+    within('.controls') do
+      click_on "Order"
+    end
 
     within("#item_1") do
       fill_in "order_item_quantity", with: 10

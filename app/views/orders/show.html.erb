@@ -36,7 +36,7 @@
     <tr>
       <td></td>
       <td><h4>Order Total</h4></td>
-      <td><h4>$<%= @order.subtotal %>0</h4></td>
+      <td><h4><%= print_price(@order.subtotal) %></h4></td>
       <td>
 <%= link_to "Checkout", checkout_path, {:class => "btn btn-primary login"} %></td>
       <td></td>

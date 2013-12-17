@@ -13,8 +13,18 @@
   margin-right:3%;
 }
 
+
 .user_order .total {
   margin-top:7%;
+}
+
+.user_order {
+  margin:auto;
+}
+
+.order-subtotal {
+  float:right;
+  margin-right:10px;
 }
 
 .checkout-container {
@@ -66,6 +76,31 @@
 
 #checkout-button {
   float:left;
+}
+
+#final-order-total {
+  position:fixed;
+  top:55%;
+  right:15px;
+  bottom:150px;
+  display:block;
+  float:left;
+  color:black;
+  width: 20%;
+  background-color: #fff;
+  
+  margin: 0 auto;
+  
+  -webkit-border-radius: 10px 10px 10px 10px;
+     -moz-border-radius: 10px 10px 10px 10px;
+          border-radius: 10px 10px 10px 10px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+          box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.reference_id {
+  float: left;
 }
 
 

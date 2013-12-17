@@ -41,4 +41,29 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.update_orders(new_orders, old_orders)
+    # find any pairs of orders for same restaurant
+    # add old order deets to new order
+    # return new order id
+    new_orders.each do |order|
+      matched_order = old_orders.select { |o| o.restaurant_id == order.restaurant_id }
+      if matched_order.first
+        matched_order.first.order_items.each do |order_item|
+          if order.items.include? order_item.item
+            found_order_item = OrderItem.where(order_id:order.id, item_id:order_item.item.id).first
+            new_quantity = found_order_item.quantity + order_item.quantity
+            found_order_item.update(quantity: new_quantity)
+          else
+            order.items << order_item.item
+          end
+        end
+        old_orders = old_orders - matched_order
+        matched_order.first.status = "pending"
+        matched_order.first.save
+      end
+      order.save
+    end
+    (new_orders + old_orders).map { |ord| ord.id }
+  end
+
 end

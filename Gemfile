@@ -44,6 +44,8 @@ end
 
 group :test, :development do
   gem 'minitest-rails-capybara'
+  gem 'better_errors'
+  gem "binding_of_caller"
   gem 'launchy'
   gem 'pry'
   gem 'guard'
@@ -67,3 +69,4 @@ gem 'sorcery'
 gem 'paperclip'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'aws-sdk', '~> 1.25'
+gem 'resque'

@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
 
   def require_user_or_guest
     unless current_user || guest
+      store_redirect_destination
       redirect_to login_options_path
     end
   end
@@ -26,6 +27,12 @@ class ApplicationController < ActionController::Base
     order_ids.delete(order.id.to_s)
     cookies.delete :order_ids
     cookies[:order_ids] = order_ids.join(',')
+  end
+
+  def store_redirect_destination
+    unless request.fullpath == login_url
+      cookies[:return_to] = request.fullpath
+    end
   end
 
 end

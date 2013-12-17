@@ -1,18 +1,58 @@
 <div id="restaurant_<%= order.restaurant.id %>_order">
-  <div class="checkout-container">
-    <div class="order">
 
-      <%= order.restaurant.name %>
+  <div class="user_order" id="order_details" >
 
-      <%= render partial: "item", collection: order.items %>
+    <div class='checkout-container'> 
+      <div id="order_<%= order.id %>">
+        <h2><%= link_to order.restaurant.name, order.restaurant %></h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Dish</th>
+              <th></th>
+              <th>Price</th>
+              <th></th>
+              <th>Quantity</th>
+              <th>Item Subtotal</th>
+            </tr>
+          </thead>
 
-      <div class="total">
-        <h4>Subtotal</h4>
-        <h4>$<%= order.subtotal %>0</h4>
+          <% order.items.each do |item| %>
+            <tbody>
+              <tr>
+                <div class='items' id="item_<%= item.id %>">
+                  <td>
+                    <span class='item-title'><%= link_to item.title, item_path(item) %></span>
+                  </td>
+                  <td></td>
+
+                  <td><%= print_price(item.price) %></td>
+
+                  <td></td>
+                  <td>
+                    <%= order_item(order,item).quantity %>
+
+                  </td>
+                  <td><%= print_price(order_item(order,item).subtotal) %></td>
+                </div>
+
+              </tr>
+            </tbody>
+          <% end %>
+          
+        </table>
+        <legend></legend>
+        
+        <div class='reference_id'>
+          <h5>Reference ID: <%= order.id %></h5>
+        </div>
+
+        <div class='order-subtotal'>
+          <h3>Subtotal: <%= print_price(order.subtotal) %></h3>
+        </div>
+
       </div>
-
     </div>
   </div>
 </div>
-
 
