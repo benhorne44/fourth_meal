@@ -1,6 +1,6 @@
 # require "pry"
 class UserSessionsController < ApplicationController
-  after_action :clear_return_to, only: [:create]
+  # after_action :clear_return_to, only: [:create]
 
   def new
     if current_user
