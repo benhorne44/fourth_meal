@@ -12,19 +12,19 @@ class RestaurantsController < ApplicationController
     else
       @items = @restaurant.active_items
 
-      unless @restaurant.active? && @restaurant.published?
-        if current_user
-          if @restaurant.owners.include?(current_user) or current_user.admin?
-            render :show
-          else
-            redirect_to root_path
-          end
-        else
-          redirect_to root_path
-        end
+      permissions_for(@restaurant)
+
+      @categories = @restaurant.items.collect do |item|
+        item.categories
+      end.flatten.uniq
+
+      if params["Categories"]
+        @category = Category.find(params["Categories"])
+        @items = @restaurant.items.find_all {|item| item.categories.include? @category}
+      else
+        @items = @restaurant.active_items
       end
     end
-
   end
 
   def new
@@ -70,6 +70,20 @@ class RestaurantsController < ApplicationController
 
   def restaurant_params
     params.require(:restaurant).permit(:name, :location, :zipcode)
+  end
+
+  def permissions_for(restaurant)
+    unless restaurant.active? && restaurant.published?
+      if current_user
+        if restaurant.owners.include?(current_user) or current_user.admin?
+          render :show
+        else
+          redirect_to root_path
+        end
+      else
+        redirect_to root_path
+      end
+    end
   end
 
 end

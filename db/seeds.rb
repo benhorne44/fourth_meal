@@ -34,26 +34,6 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
 
 #___________________Restaurant Type 1__________________
 
-  2.times do |n|
-
-    user1 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
-    user2 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
-    user3 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
-    user4 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
-    owner = Role.find_by(name: 'owner')
-
-    restaurant = Restaurant.create(name: "Platable+#{n}", location: "123 Fake St", phone_number: "123-456-7890", region: cities.sample)
-    restaurant.published = true
-    restaurant.active = true
-    # restaurant.jobs.create(user_id: user1.id, role_id: owner.id)
-    # restaurant.jobs.create(user_id: user2.id, role_id: owner.id)
-
-    restaurant.save
-    Job.create_new(restaurant, user1, 'owner')
-    Job.create_new(restaurant, user2, 'owner')
-    Job.create_new(restaurant, user3, 'stocker')
-    Job.create_new(restaurant, user4, 'stocker')
-
     plates = Category.create(name: "Plates")
     snacks = Category.create(name: "Snacks")
     desserts = Category.create(name: "Dessert")
@@ -62,6 +42,30 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
     sandwiches = Category.create(name: "Sandwiches")
     burgers = Category.create(name: "Burgers")
     brunch = Category.create(name: "Brunch")
+    ["Entrees", "Appetizers", "Beverages", "Specialties",
+        "Apéritifs", "Digestifs", "Vegetarian", "Kids Menu"].each do |cat|
+        Category.create(name: cat)
+    end
+
+
+
+    user1 = User.create({username: "gerald0", email: "gerald0@example.com", password: 'password'})
+    user2 = User.create({username: "gerald1", email: "gerald1@example.com", password: 'password'})
+    user3 = User.create({username: "gerald2", email: "gerald2@example.com", password: 'password'})
+    user4 = User.create({username: "gerald3", email: "gerald3@example.com", password: 'password'})
+    owner = Role.find_by(name: 'owner')
+
+    restaurant = Restaurant.create(name: "Platable", location: "123 Fake St", phone_number: "123-456-7890", region: cities.sample)
+    restaurant.published = true
+    restaurant.active = true
+
+
+    restaurant.save
+    Job.create_new(restaurant, user1, 'owner')
+    Job.create_new(restaurant, user2, 'owner')
+    Job.create_new(restaurant, user3, 'stocker')
+    Job.create_new(restaurant, user4, 'stocker')
+
 
     deviled_eggs = Item.new(title: "Deviled Eggs", description: "12 delicious deviled eggs", price: '500', restaurant_id: restaurant.id)
     deviled_eggs.image = open("https://platable.s3.amazonaws.com/items/images/000/000/001/small/deviled_eggs.jpg")
@@ -199,11 +203,15 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
     coco_cake.save
 
     desserts.items << coco_cake
+<<<<<<< HEAD
   end
+=======
+>>>>>>> category_sorting
 
 
 # _______________ WTPHO _______________________
 
+<<<<<<< HEAD
 2.times do |n|
 
     user5 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
@@ -246,3 +254,56 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
                           { item_id: 12, category_id: category.id},
                           { item_id: 38, category_id: category.id}])
 end
+=======
+
+    user5 = User.create({username: "gerome0", email: "gerome0@example.com", password: 'password'})
+    user6 = User.create({username: "gerome1", email: "gerome1@example.com", password: 'password'})
+    user7 = User.create({username: "gerome2", email: "gerome2@example.com", password: 'password'})
+    user8 = User.create({username: "gerome3", email: "gerome3@example.com", password: 'password'})
+
+    restaurant2 = Restaurant.create(name: "WTPHO", location: "456 Not Real Ave", phone_number: "456-123-7890", region: cities.sample)
+    restaurant2.published = true
+    restaurant2.active = true
+    restaurant2.save
+    images = File.open "./app/assets/images"
+
+    restaurant2.save
+    Job.create_new(restaurant2, user5, 'owner')
+    Job.create_new(restaurant2, user6, 'owner')
+    Job.create_new(restaurant2, user7, 'stocker')
+    Job.create_new(restaurant2, user8, 'stocker')
+
+    contents = CSV.open "./db/wtpho.csv", headers: true, header_converters: :symbol
+
+    contents.each do |row|
+
+      title       = row[:title]
+      description = row[:description]
+      price       = row[:price]
+      category    = row[:category]
+      image_file_name = row[:image_file_name]
+
+      category_object = Category.find_or_create_by(name: category)
+      item = restaurant2.items.create(title: title, description: description, price: price, image_file_name: image_file_name)
+
+      ItemCategory.create(category_id: category_object.id, item_id: item.id)
+    end
+    category = Category.create(name: "House Specials")
+
+    ItemCategory.create([{ item_id: 9, category_id: category.id},
+                          { item_id: 10, category_id: category.id},
+                          { item_id: 16, category_id: category.id},
+                          { item_id: 12, category_id: category.id},
+                          { item_id: 38, category_id: category.id}])
+
+# _____________ workers __________________
+
+  2.times do |n|
+
+    Resque.enqueue(PlatableBuilder, n, cities.sample)
+
+    Resque.enqueue(WtphoBuilder, n, cities.sample)
+
+
+  end
+>>>>>>> category_sorting
