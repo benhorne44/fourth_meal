@@ -2,7 +2,7 @@ require 'resque/server'
 
 DinnerDash::Application.routes.draw do
 
-  resources :items
+  resources :items, except: [:new]
   resources :orders
   resources :order_items
   resources :users
@@ -12,6 +12,8 @@ DinnerDash::Application.routes.draw do
   root to: 'restaurants#index'
 
   post "items/add_to_order/:id" => 'items#add_to_order', as: 'add_item'
+  get "new/:id" => 'items#new', as: 'new_item'
+
   get "login" => "user_sessions#new"
   get "logout" => "user_sessions#destroy"
   get "login_options" => "user_sessions#options", as: "login_options"
@@ -32,7 +34,8 @@ DinnerDash::Application.routes.draw do
   post 'charges_all' => 'charges#charges_all', as: 'charges_all'
   post 'charges/:id' => 'charges#create', as: 'charges'
 
-  get 'restaurant_dashboardi/:id' => "restaurants#dashboard", as: 'restaurant_dashboard'
+  get 'restaurant_dashboard/:id' => "restaurants#dashboard", as: 'restaurant_dashboard'
+end
 
   mount Resque::Server.new, at: "/resque"
 end

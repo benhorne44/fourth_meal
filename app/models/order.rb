@@ -51,7 +51,7 @@ class Order < ActiveRecord::Base
             new_quantity = found_order_item.quantity + order_item.quantity
             found_order_item.update(quantity: new_quantity)
           else
-            order.items << item
+            order.items << order_item.item
           end
         end
         old_orders = old_orders - matched_order

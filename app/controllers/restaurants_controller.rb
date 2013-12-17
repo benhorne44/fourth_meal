@@ -10,7 +10,10 @@ class RestaurantsController < ApplicationController
   end
 
   def new
-    redirect_to_login unless current_user
+    unless current_user
+      cookies[:return_to] = request.fullpath
+      redirect_to_login
+    end
     @restaurant = Restaurant.new
   end
 
@@ -28,6 +31,7 @@ class RestaurantsController < ApplicationController
 
   def dashboard
     @restaurant = Restaurant.find(params[:id])
+    @items = @restaurant.items
     redirect_to root_path unless @restaurant.owners.include? current_user
   end
 
