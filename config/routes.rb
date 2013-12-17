@@ -11,10 +11,10 @@ DinnerDash::Application.routes.draw do
   resources :restaurants
   root to: 'restaurants#index'
 
-  scope ":restaurant_slug" do
-    resources :items, :only => [:show, :new, :create, :edit, :update]
-    get "/dashboard", to: "restaurants#show", as: "restaurant_dashboard"
-  end
+  # scope ":restaurant_slug" do
+  #   resources :items, :only => [:show, :new, :create, :edit, :update]
+  #   get "/dashboard", to: "restaurants#show", as: "restaurant_dashboard"
+  # end
 
   post "items/add_to_order/:id" => 'items#add_to_order', as: 'add_item'
 
@@ -38,7 +38,7 @@ DinnerDash::Application.routes.draw do
   post 'charges_all' => 'charges#charges_all', as: 'charges_all'
   post 'charges/:id' => 'charges#create', as: 'charges'
 
-  # get 'restaurant_dashboard/:id' => "restaurants#dashboard", as: 'restaurant_dashboard'
+  get 'restaurant_dashboard/:id' => "restaurants#dashboard", as: 'restaurant_dashboard'
 
 
   mount Resque::Server.new, at: "/resque"
