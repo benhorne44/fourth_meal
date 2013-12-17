@@ -6,15 +6,22 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
-    @items = @restaurant.active_items
-
-    unless (@restaurant.active? && @restaurant.published?) ||
-      (@restaurant.owners.include?(current_user)) ||
-      current_user.admin?
-
+    @restaurant = Restaurant.find_by(id: params[:id])
+    if @restaurant.nil?
       redirect_to root_path
+    else
+      @items = @restaurant.active_items
+
+      unless @restaurant.active? && @restaurant.published?
+        if current_user
+          @restaurant.owners.include?(current_user) or current_user.admin?
+          render :show
+        else
+          redirect_to root_path
+        end
+      end
     end
+
   end
 
   def new
