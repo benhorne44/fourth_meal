@@ -1,6 +1,8 @@
 <li id="item_<%= item.id %>" class="item">
   <div class="item-wrapper">
-    <%= image_tag item.image.url(:small), {:class => "item-show-image"} %><br/>
+    <% if item.image? %>
+      <%= image_tag item.image.url(:small), {:class => "item-show-image"} %><br/>
+    <% end %>
     <div class="item-details">
       <a href="<%= item_path item.id %>" class="title"><%= item.title %></a>
       <p> <%= item.description %></p>
