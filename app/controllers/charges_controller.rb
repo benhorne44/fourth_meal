@@ -33,7 +33,7 @@ class ChargesController < ApplicationController
       flash.notice = "Your order is successfull"
       cookies.delete :order_ids
       cookies.delete :guest_email
-      UserMailer.order_email(current_user, current_user.orders.last).deliver
+      # UserMailer.order_email(current_user, current_user.orders.last).deliver
     end
     redirect_to completed_order_path(@orders.first.obscure_identifier)
   end

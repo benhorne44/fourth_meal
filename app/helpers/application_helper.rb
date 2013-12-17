@@ -22,5 +22,11 @@ module ApplicationHelper
     end
   end
 
+  def create_restaurant_link
+    unless current_user && current_user.restaurant_owner
+      link_to 'I want to create a restaurant', new_restaurant_path
+    end
+  end
+
 end
 

@@ -1,12 +1,30 @@
 class RestaurantsController < ApplicationController
 
+
   def index
     @restaurants = Restaurant.published_and_active
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
-    @items = @restaurant.active_items
+    @restaurant = Restaurant.find_by(id: params[:id])
+    if @restaurant.nil?
+      redirect_to root_path
+    else
+      @items = @restaurant.active_items
+
+      permissions_for(@restaurant)
+
+      @categories = @restaurant.items.collect do |item|
+        item.categories
+      end.flatten.uniq
+
+      if params["Categories"]
+        @category = Category.find(params["Categories"])
+        @items = @restaurant.items.find_all {|item| item.categories.include? @category}
+      else
+        @items = @restaurant.active_items
+      end
+    end
   end
 
   def new
@@ -32,7 +50,23 @@ class RestaurantsController < ApplicationController
   def dashboard
     @restaurant = Restaurant.find(params[:id])
     @items = @restaurant.items
-    redirect_to root_path unless @restaurant.owners.include? current_user
+    redirect_to root_path unless @restaurant.owners.include?(current_user) || current_user.admin
+  end
+
+  def toggle
+    @restaurant = Restaurant.find(params[:id])
+    redirect_to root_path unless @restaurant.owners.include?(current_user) || current_user.admin
+    @restaurant.active ? @restaurant.active = false : @restaurant.active = true
+    @restaurant.save
+    redirect_to restaurant_dashboard_path(@restaurant)
+  end
+
+  def publish
+    @restaurant = Restaurant.find(params[:id])
+    redirect_to root_path unless @restaurant.owners.include?(current_user) || current_user.admin
+    @restaurant.published ? @restaurant.published = false : @restaurant.published = true
+    @restaurant.save
+    redirect_to restaurant_dashboard_path(@restaurant)
   end
 
   private
@@ -44,6 +78,20 @@ class RestaurantsController < ApplicationController
 
   def restaurant_params
     params.require(:restaurant).permit(:name, :location, :zipcode)
+  end
+
+  def permissions_for(restaurant)
+    unless restaurant.active? && restaurant.published?
+      if current_user
+        if restaurant.owners.include?(current_user) or current_user.admin?
+          render :show
+        else
+          redirect_to root_path
+        end
+      else
+        redirect_to root_path
+      end
+    end
   end
 
 end

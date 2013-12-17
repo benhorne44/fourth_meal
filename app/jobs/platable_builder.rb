@@ -1,16 +1,15 @@
-class RestaurantBuilder
+class PlatableBuilder
 
   @queue = :restaurants
 
-  def self.perform(number)
+  def self.perform(number, city)
     n = number
     user1 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
     user2 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
     user3 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
     user4 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
     owner = Role.find_by(name: 'owner')
-    # n = (1...999).to_a.sample
-    restaurant = Restaurant.create(name: "Platable+#{number}", location: "123 Fake St", phone_number: "123-456-7890")
+    restaurant = Restaurant.create(name: "Platable+#{number}", location: "123 Fake St", phone_number: "123-456-7890", region: city)
     restaurant.published = true
     restaurant.active = true
     restaurant.jobs.create(user_id: user1.id, role_id: owner.id)
@@ -154,6 +153,8 @@ class RestaurantBuilder
     coco_cake.save
 
     Category.all.sample.items << coco_cake
+
+
   end
 
 end

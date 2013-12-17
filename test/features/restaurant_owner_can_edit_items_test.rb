@@ -26,7 +26,7 @@ class RestaurantOwnerCanEditItemsTest < Capybara::Rails::TestCase
 
     fill_in "Title", with: 'Burger'
     fill_in "Description", with: 'Tasty with cheese'
-    fill_in "Price", with: 5
+    fill_in "Price", with: 500
     click_on 'Add Item'
 
     within("#items") do
@@ -71,10 +71,65 @@ class RestaurantOwnerCanEditItemsTest < Capybara::Rails::TestCase
     fill_in "Title", with: 'Enchilada'
     click_on "Update item"
 
+
     within("#items") do
       assert_content page, "Enchilada"
       refute_content page, "Burger"
     end
+  end
+
+  test "restaurant owner can make restaurant active from dashboard" do
+    FactoryGirl.create(:user)
+    FactoryGirl.create(:role)
+    visit login_path
+
+    fill_in "Username", with: 'big_eater'
+    fill_in "Password", with: 'password'
+
+    within(".form-container") do
+      click_on "Login"
+    end
+
+    click_on "I want to create a restaurant"
+
+    fill_in "Restaurant Name", with: 'Toms Tavern'
+    fill_in "Address", with: '123 Street Street'
+    fill_in "Zipcode", with: '90210'
+    click_on "Submit for approval"
+
+    assert_content page, "Status: Inactive"
+    click_on "Activate"
+    assert_content page, "Status: Active"
+    click_on "Deactivate"
+    assert_content page, "Status: Inactive"
+  end
+
+  test "restaurant owner can visit dashboard from account profile" do
+    FactoryGirl.create(:user)
+    FactoryGirl.create(:role)
+    visit login_path
+
+    fill_in "Username", with: 'big_eater'
+    fill_in "Password", with: 'password'
+
+    within(".form-container") do
+      click_on "Login"
+    end
+
+    click_on "I want to create a restaurant"
+
+    fill_in "Restaurant Name", with: 'Toms Tavern'
+    fill_in "Address", with: '123 Street Street'
+    fill_in "Zipcode", with: '90210'
+    click_on "Submit for approval"
+
+    within(".controls") do
+      click_on "Account"
+    end
+
+    click_on "Toms Tavern Dashboard"
+
+    assert_content page, "Toms Tavern Dashboard"
   end
 
 end

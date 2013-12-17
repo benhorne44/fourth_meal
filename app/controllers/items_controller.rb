@@ -1,9 +1,6 @@
 # require 'pry'
 class ItemsController < ApplicationController
 
-  #before_action :require_login, except: [:index, :show, :add_to_order]
-  #before_action :require_admin, except: [:index, :show, :add_to_order]
-
   def index
     redirect_to new_order_path unless cookies[:order_id]
     if params["Categories"]
@@ -24,12 +21,12 @@ class ItemsController < ApplicationController
     @item = Item.new
     @categories = Category.all
     @restaurant = Restaurant.find(params[:id])
-    redirect_to root_path unless @restaurant.owners.include? current_user
+    redirect_to root_path unless @restaurant.owners.include?(current_user) || current_user.admin
   end
 
   def create
     @restaurant = Restaurant.find(params[:item][:restaurant_id])
-    redirect_to root_path unless @restaurant.owners.include? current_user
+    redirect_to root_path unless @restaurant.owners.include?(current_user) || current_user.admin
     @item = Item.new(item_params)
     @item.save
     @item.update_categories(params[:item][:category])
@@ -55,7 +52,8 @@ class ItemsController < ApplicationController
   def update
     @item = Item.update(params[:id], item_params)
     @item.update_categories(params[:item][:category])
-    redirect_to items_path
+    @restaurant = @item.restaurant
+    redirect_to restaurant_dashboard_path(@restaurant)
   end
 
   def add_to_order
