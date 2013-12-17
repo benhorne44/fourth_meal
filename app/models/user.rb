@@ -18,7 +18,8 @@ class User < ActiveRecord::Base
     orders.where(status: 'completed')
   end
 
-  def restaurant_employee(restaurant)
+  def restaurant_owner
+    jobs.map(&:role_id).include?(1)
   end
 
 end

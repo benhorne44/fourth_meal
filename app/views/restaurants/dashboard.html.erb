@@ -1,11 +1,12 @@
-<h1><%= @restaurant.name %> Dashboard</h1>
+<h1><%= @restaurant.name %> Dashboard (<%= restaurant_status(@restaurant) %>)</h1>
+<%= toggle_restaurant_button(@restaurant) %>
 
 <div id='items'>
   <% @items.each do |item| %>
     <div id="item_<%= item.id %>">
       <h3><%= item.title %></h3>
       <p><%= item.description %></p>
-      <p>Price: $<%= print_price(item.price) %></p>
+      <p>Price: <%= print_price(item.price) %></p>
       <%= link_to "Edit Item", edit_item_path(item) %>
     </div>
   <% end %>
