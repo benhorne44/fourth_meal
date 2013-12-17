@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @categories = Category.all
     @orders = Order.all
     @users = User.all
+    @restaurants = Restaurant.all
   end
 
   def index
@@ -74,7 +75,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:username, :email, :password)
   end
-  
+
   def unset_guest
     cookies.delete :guest_email unless cookies[:guest_email].blank?
   end

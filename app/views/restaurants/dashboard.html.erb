@@ -1,5 +1,6 @@
 <h1><%= @restaurant.name %> Dashboard (<%= restaurant_status(@restaurant) %>)</h1>
 <%= toggle_restaurant_button(@restaurant) %>
+<%= publish_restaurant_button(@restaurant) %>
 
 <div id='items'>
   <% @items.each do |item| %>
