@@ -68,7 +68,7 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
 
 
     deviled_eggs = Item.new(title: "Deviled Eggs", description: "12 delicious deviled eggs", price: '500', restaurant_id: restaurant.id)
-    deviled_eggs.image = open("https://platable.s3.amazonaws.com/items/images/000/000/001/small/deviled_eggs.jpg")
+    deviled_eggs.image = open("https://s3.amazonaws.com/fourth_meal/classic_burger.jpg")
     deviled_eggs.save
 
     snacks.items << deviled_eggs
@@ -203,15 +203,10 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
     coco_cake.save
 
     desserts.items << coco_cake
-<<<<<<< HEAD
-  end
-=======
->>>>>>> category_sorting
 
 
 # _______________ WTPHO _______________________
 
-<<<<<<< HEAD
 2.times do |n|
 
     user5 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
@@ -254,7 +249,6 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
                           { item_id: 12, category_id: category.id},
                           { item_id: 38, category_id: category.id}])
 end
-=======
 
     user5 = User.create({username: "gerome0", email: "gerome0@example.com", password: 'password'})
     user6 = User.create({username: "gerome1", email: "gerome1@example.com", password: 'password'})
@@ -298,12 +292,11 @@ end
 
 # _____________ workers __________________
 
-  2.times do |n|
+  # 2.times do |n|
 
-    Resque.enqueue(PlatableBuilder, n, cities.sample)
+  #   Resque.enqueue(PlatableBuilder, n, cities.sample)
 
-    Resque.enqueue(WtphoBuilder, n, cities.sample)
+  #   Resque.enqueue(WtphoBuilder, n, cities.sample)
 
 
-  end
->>>>>>> category_sorting
+  # end
