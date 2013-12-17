@@ -31,6 +31,7 @@ class RestaurantsController < ApplicationController
 
   def dashboard
     @restaurant = Restaurant.find(params[:id])
+    @items = @restaurant.items
     redirect_to root_path unless @restaurant.owners.include? current_user
   end
 

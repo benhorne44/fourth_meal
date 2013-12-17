@@ -1,1 +1,16 @@
 <h1><%= @restaurant.name %> Dashboard</h1>
+
+<div id='items'>
+  <% @items.each do |item| %>
+    <div id="item_<%= item.id %>">
+      <h3><%= item.title %></h3>
+      <p><%= item.description %></p>
+      <p>Price: $<%= item.price.to_f %>0</p>
+      <%= link_to "Edit Item", edit_item_path(item) %>
+    </div>
+  <% end %>
+</div>
+
+<div id='employee_controls'>
+  <%= link_to "Add a New Item", new_item_path(@restaurant) %>
+</div>

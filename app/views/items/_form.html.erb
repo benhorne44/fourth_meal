@@ -11,6 +11,7 @@
     <%= f.label :price %>
     <%= f.text_field :price %>
   </p>
+  <%= f.hidden_field :restaurant_id, value: @restaurant.id %>
   <br>
   <h4>Select a Category</h4>
   <% @categories.each do |category| %>
