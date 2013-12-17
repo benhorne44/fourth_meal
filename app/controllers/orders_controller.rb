@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
   # def show
   #   if cookies[:order_id]
   #     @order
-  = Order.find(cookies[:order_id])
+  # = Order.find(cookies[:order_id])
   #   elsif params[:id]
   #     @order = Order.find(params[:id])
   #   end
