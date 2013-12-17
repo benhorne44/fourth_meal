@@ -35,7 +35,7 @@ DinnerDash::Application.routes.draw do
   post 'charges/:id' => 'charges#create', as: 'charges'
 
   get 'restaurant_dashboard/:id' => "restaurants#dashboard", as: 'restaurant_dashboard'
-end
+
 
   mount Resque::Server.new, at: "/resque"
 end

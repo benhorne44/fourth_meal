@@ -23,7 +23,7 @@ class UserSessionsController < ApplicationController
       unset_guest
       flash.notice = "Successfully logged in as #{current_user.username}"
       if saved_orders
-        flash.notice = "You have unpurchased items from a previous visit, your current order has been updated."
+        # flash.notice = "You have unpurchased items from a previous visit, your current order has been updated."
       end
       if cookies[:return_to] != ""
         redirect_to cookies[:return_to]

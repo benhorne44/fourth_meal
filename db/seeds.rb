@@ -14,7 +14,7 @@ admin2.save
 
 #___________________Roles_______________________
 
-role_types = ['owner']
+role_types = ['owner', 'stocker']
 role_types.each do |role|
   Role.create(name: role)
 end
@@ -34,11 +34,12 @@ cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoe
 
 #___________________Restaurant Type 1__________________
 
-Thread.new do
   2.times do |n|
 
     user1 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
     user2 = User.create({username: "bob#{n}", email: "bob#{n}@example.com", password: 'password'})
+    user3 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
+    user4 = User.create({username: "rick#{n}", email: "rick#{n}@example.com", password: 'password'})
     owner = Role.find_by(name: 'owner')
 
     restaurant = Restaurant.create(name: "Platable+#{n}", location: "123 Fake St", phone_number: "123-456-7890", region: cities.sample)
@@ -48,6 +49,10 @@ Thread.new do
     # restaurant.jobs.create(user_id: user2.id, role_id: owner.id)
 
     restaurant.save
+    Job.create_new(restaurant, user1, 'owner')
+    Job.create_new(restaurant, user2, 'owner')
+    Job.create_new(restaurant, user3, 'stocker')
+    Job.create_new(restaurant, user4, 'stocker')
 
     plates = Category.create(name: "Plates")
     snacks = Category.create(name: "Snacks")
@@ -195,41 +200,49 @@ Thread.new do
 
     desserts.items << coco_cake
   end
-end
 
 
 # _______________ WTPHO _______________________
 
-# 100.times do |n|
+2.times do |n|
 
-#   Thread.new do
-#     restaurant2 = Restaurant.create(name: "WTPHO+#{n}", location: "456 Not Real Ave", phone_number: "456-123-7890", region: cities.sample)
-#     restaurant2.published = true
-#     restaurant2.active = true
-#     restaurant2.save
-#     images = File.open "./app/assets/images"
+    user5 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
+    user6 = User.create({username: "bobby#{n}", email: "bobby#{n}@example.com", password: 'password'})
+    user7 = User.create({username: "ricky#{n}", email: "ricky#{n}@example.com", password: 'password'})
+    user8 = User.create({username: "ricky#{n}", email: "ricky#{n}@example.com", password: 'password'})
 
-#     contents = CSV.open "./db/wtpho.csv", headers: true, header_converters: :symbol
+    restaurant2 = Restaurant.create(name: "WTPHO+#{n}", location: "456 Not Real Ave", phone_number: "456-123-7890", region: cities.sample)
+    restaurant2.published = true
+    restaurant2.active = true
+    restaurant2.save
+    images = File.open "./app/assets/images"
 
-#     contents.each do |row|
+    restaurant2.save
+    Job.create_new(restaurant2, user5, 'owner')
+    Job.create_new(restaurant2, user6, 'owner')
+    Job.create_new(restaurant2, user7, 'stocker')
+    Job.create_new(restaurant2, user8, 'stocker')
 
-#       title       = row[:title]
-#       description = row[:description]
-#       price       = row[:price]
-#       category    = row[:category]
-#       image_file_name = row[:image_file_name]
+    contents = CSV.open "./db/wtpho.csv", headers: true, header_converters: :symbol
 
-#       category_object = Category.find_or_create_by(name: category)
-#       item = restaurant2.items.create(title: title, description: description, price: price, image_file_name: image_file_name)
+    contents.each do |row|
 
-#       ItemCategory.create(category_id: category_object.id, item_id: item.id)
-#     end
-#     category = Category.create(name: "House Specials")
+      title       = row[:title]
+      description = row[:description]
+      price       = row[:price]
+      category    = row[:category]
+      image_file_name = row[:image_file_name]
 
-#     ItemCategory.create([{ item_id: 9, category_id: category.id},
-#                           { item_id: 10, category_id: category.id},
-#                           { item_id: 16, category_id: category.id},
-#                           { item_id: 12, category_id: category.id},
-#                           { item_id: 38, category_id: category.id}])
-#   end
-# end
+      category_object = Category.find_or_create_by(name: category)
+      item = restaurant2.items.create(title: title, description: description, price: price, image_file_name: image_file_name)
+
+      ItemCategory.create(category_id: category_object.id, item_id: item.id)
+    end
+    category = Category.create(name: "House Specials")
+
+    ItemCategory.create([{ item_id: 9, category_id: category.id},
+                          { item_id: 10, category_id: category.id},
+                          { item_id: 16, category_id: category.id},
+                          { item_id: 12, category_id: category.id},
+                          { item_id: 38, category_id: category.id}])
+end
