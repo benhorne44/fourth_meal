@@ -2,6 +2,8 @@
 
 <% @restaurants.each do |restaurant| %>
 
-  <%= render partial: "restaurant", :locals => {restaurant: restaurant} %>
+  <% cache restaurant do %>
+    <%= render partial: "restaurant", :locals => {restaurant: restaurant} %>
+  <% end %>
 
 <% end %>

@@ -1,8 +1,8 @@
 # require 'pry'
 class Job < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :restaurant
-  belongs_to :role
+  belongs_to :user, :touch => true
+  belongs_to :restaurant, :touch => true
+  belongs_to :role, :touch => true
 
   def owner
     Role.find(role_id).name == 'owner'
