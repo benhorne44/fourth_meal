@@ -15,7 +15,8 @@ class OrdersController < ApplicationController
 
   # def show
   #   if cookies[:order_id]
-  #     @order = Order.find(cookies[:order_id])
+  #     @order
+  # = Order.find(cookies[:order_id])
   #   elsif params[:id]
   #     @order = Order.find(params[:id])
   #   end
@@ -47,11 +48,12 @@ class OrdersController < ApplicationController
     current_user.change_order_to_completed
     flash.notice = "Your order is successfull"
     cookies.delete :order_id
-    UserMailer.order_email(current_user, current_user.orders.last).deliver
+    # UserMailer.order_email(current_user, current_user.orders.last).deliver
     redirect_to user_path(current_user)
   end
 
   def completed_order
     @orders = Order.where(obscure_identifier: params[:id])
+    # UserMailer.order_email(current_user.email).deliver
   end
 end

@@ -13,12 +13,8 @@
     <p>You card has been charged $<%= @order.subtotal %>0</p>
 
     View your order details here: 
-    <% if @user %>
     <!-- should be link to order details page -->
-      <%= link_to root_path %>
-    <% else %>
-    <!-- add obscure link to review order -->
-    <% end %>
-      
+      <a href=<%= @url%>>Click here</a>
+    <!-- add obscure link to review order -->      
   </body>
 </html>

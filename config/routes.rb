@@ -11,8 +11,12 @@ DinnerDash::Application.routes.draw do
   resources :restaurants
   root to: 'restaurants#index'
 
+  # scope ":restaurant_slug" do
+  #   resources :items, :only => [:show, :new, :create, :edit, :update]
+  #   get "/dashboard", to: "restaurants#show", as: "restaurant_dashboard"
+  # end
+
   post "items/add_to_order/:id" => 'items#add_to_order', as: 'add_item'
-  get "new/:id" => 'items#new', as: 'new_item'
 
   get "login" => "user_sessions#new"
   get "logout" => "user_sessions#destroy"
