@@ -34,8 +34,8 @@ class CanAccessItemsTest < Capybara::Rails::TestCase
 
   test "can view individual item info" do
     restaurant = FactoryGirl.create(:restaurant)
-    @item = restaurant.items.create({title: "Burger", description: "Loafy goodness", price: '1'})
-    @item2 = restaurant.items.create({title: "Pita", description: "Loafy badness", price:'1'})
+    @item = restaurant.items.create({title: "Burger", description: "Loafy goodness", price: '100'})
+    @item2 = restaurant.items.create({title: "Pita", description: "Loafy badness", price:'100'})
     visit restaurant_path(restaurant)
     within("#item_1") do
       click_on "#{@item.title}"

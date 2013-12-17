@@ -26,7 +26,7 @@ class RestaurantOwnerCanEditItemsTest < Capybara::Rails::TestCase
 
     fill_in "Title", with: 'Burger'
     fill_in "Description", with: 'Tasty with cheese'
-    fill_in "Price", with: 5
+    fill_in "Price", with: 500
     click_on 'Add Item'
 
     within("#items") do
@@ -70,6 +70,7 @@ class RestaurantOwnerCanEditItemsTest < Capybara::Rails::TestCase
 
     fill_in "Title", with: 'Enchilada'
     click_on "Update item"
+
 
     within("#items") do
       assert_content page, "Enchilada"

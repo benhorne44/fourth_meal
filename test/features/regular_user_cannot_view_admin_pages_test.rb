@@ -51,6 +51,7 @@ class RegularUserCannotViewAdminPagesTest < Capybara::Rails::TestCase
 
   test "logged in user cannot create items" do
     user1 = User.create({username: 'bob_bob', email: 'bob@example.com', password: 'password'})
+    restaurant = FactoryGirl.create(:restaurant)
     visit root_path
     click_on "Login"
 
@@ -58,7 +59,7 @@ class RegularUserCannotViewAdminPagesTest < Capybara::Rails::TestCase
     fill_in "Password", with: 'password'
     click_button "Login"
 
-    visit new_item_path
+    visit new_item_path(restaurant)
     refute_content page, "Create an Item"
   end
 end

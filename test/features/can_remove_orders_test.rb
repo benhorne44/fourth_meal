@@ -21,16 +21,21 @@ class CanRemoveOrdersTest < Capybara::Rails::TestCase
     assert_content page, "Your Order is empty."
   end
 
-  test "orders disappear when quantity is zero" do
-    item = Item.create(title: 'Deviled Eggs', description: '12 luscious eggs', price: '1')
-    order = Order.create
-    order.items << item
+  test "orders error when quantity is zero" do
+    restaurant = FactoryGirl.create(:restaurant)
+    item = restaurant.items.create(title: 'Deviled Eggs', description: '12 luscious eggs', price: '1')
 
-    visit order_path(order)
+    visit restaurant_path(restaurant)
+
+    within("#item_1") do
+      click_on "Add to Order"
+    end
+
+    visit cart_path
 
     within("#item_1") do
       fill_in "order_item_quantity", with: 0
-      click_on "Adjust Quantity"
+      click_on "Update Quantity"
     end
 
     assert_content page, "There was an error"

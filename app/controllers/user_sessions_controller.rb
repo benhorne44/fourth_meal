@@ -22,10 +22,7 @@ class UserSessionsController < ApplicationController
       cookies[:order_ids] = updated_order_ids.join(',')
       unset_guest
       flash.notice = "Successfully logged in as #{current_user.username}"
-      if saved_orders
-        flash.notice = "You have unpurchased items from a previous visit, your current order has been updated."
-      end
-      if cookies[:return_to] != ""
+      if !cookies[:return_to].blank?
         redirect_to cookies[:return_to]
       else
         redirect_to user_path(current_user)
@@ -58,7 +55,7 @@ class UserSessionsController < ApplicationController
 
   def submit_guest
     cookies[:guest_email] = params[:email]
-    redirect_to cookies[:return_to]
+    redirect_to cookies[:return_to] ? cookies[:return_to] : root_path
   end
 
   def unset_guest
@@ -66,14 +63,7 @@ class UserSessionsController < ApplicationController
   end
 
   def clear_return_to
-    cookies[:return_to] = nil
+    cookies.delete :return_to
   end
-
-
-
-
-
-
-
 
 end
