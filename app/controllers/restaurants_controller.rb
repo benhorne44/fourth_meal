@@ -53,6 +53,14 @@ class RestaurantsController < ApplicationController
     redirect_to root_path unless @restaurant.owners.include?(current_user) || current_user.admin
   end
 
+  def toggle
+    @restaurant = Restaurant.find(params[:id])
+    redirect_to root_path unless @restaurant.owners.include?(current_user) || current_user.admin
+    @restaurant.active ? @restaurant.active = false : @restaurant.active = true
+    @restaurant.save
+    redirect_to restaurant_dashboard_path(@restaurant)
+  end
+
   private
 
   def redirect_to_login
