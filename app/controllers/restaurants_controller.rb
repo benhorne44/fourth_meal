@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
 
+
   def index
     @restaurants = Restaurant.published_and_active
   end
@@ -7,6 +8,9 @@ class RestaurantsController < ApplicationController
   def show
     @restaurant = Restaurant.find(params[:id])
     @items = @restaurant.active_items
+    unless @restaurant.active? && @restaurant.published?
+      redirect_to root_path
+    end
   end
 
   def new
