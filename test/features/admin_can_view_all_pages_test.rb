@@ -151,4 +151,24 @@ class AdminCanViewAllPagesTest < Capybara::Rails::TestCase
     visit edit_item_path(item)
     assert has_unchecked_field?("item_category_2")
   end
+
+  test "admin can publish restaurant from admin dashboard" do
+    restaurant = FactoryGirl.create(:restaurant)
+    restaurant.published = false
+    restaurant.save
+    user = FactoryGirl.build(:user)
+    user.admin = true
+    user.save
+
+    visit login_path
+    fill_in 'Username', with: 'big_eater'
+    fill_in 'Password', with: 'password'
+    click_button 'Login'
+
+    visit dashboard_path
+    within('#restaurants') do
+      click_on "Will's Waffles"
+    end
+    click_on "Publish"
+  end
 end
