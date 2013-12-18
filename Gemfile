@@ -29,19 +29,6 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-#
-
 group :test, :development do
   gem 'minitest-rails-capybara'
   gem 'better_errors'
@@ -61,10 +48,6 @@ group :production do
   gem 'rails_12factor'
   gem 'dalli'
 end
-
-# group :development do
-#   gem 'rails-erd'
-# end
 
 gem 'bootstrap-sass'
 gem 'sorcery'
