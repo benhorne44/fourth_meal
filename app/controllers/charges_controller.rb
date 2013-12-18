@@ -43,21 +43,7 @@ class ChargesController < ApplicationController
     order_id = ([params[:id].to_s] & cookies[:order_ids].to_s.split(',')).first
     @order = Order.find(order_id)
     @amount = @order.subtotal
-
-    customer = Stripe::Customer.create(
-      :email => 'example@stripe.com',
-      :card  => params[:stripeToken]
-    )
-    begin
-      charge = Stripe::Charge.create(
-        :customer    => customer.id,
-        :amount      => @amount,
-        :description => 'Rails Stripe customer',
-        :currency    => 'usd'
-      )
-    rescue Stripe::CardError => e
-      flash[:error] = e.message
-    else
+    if PaymentProcess.process_single(@order, @amount, params[:stripeToken])
       @order.update_status('Completed')
       if current_user
         @order.obscure_identifier = Encryptor.obscure_details(current_user.email, Time.now)
@@ -68,9 +54,7 @@ class ChargesController < ApplicationController
       flash.notice = "Your order is successful"
       remove_cookie_order_id(@order)
       recipient_email = current_user ? current_user.email : cookies[:guest_email]
-      # fail
-      # UserMailer.order_email(recipient_email, @order).deliver
-      # Resque.enqueue(OrderEmail, "hello", 1)
+      Resque.enqueue(OrderEmail, recipient_email, @order.id)
       cookies.delete :guest_email
     end
     redirect_to completed_order_path(@order.obscure_identifier)

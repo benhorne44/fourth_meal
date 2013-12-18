@@ -1,8 +1,8 @@
 class OrderEmail
   @queue = :order_email
 
-  def self.perform(user_email, order_id)
-    puts "hello"
+  def self.perform(email, order_id)
+    UserMailer.order_email(email, order_id).deliver
   end
 
 end
