@@ -10,7 +10,7 @@ html {
 }
 
 body {
-  margin: 0 10% 0 15%; /* bottom = footer height */
+  margin: 0 10% 100px 15%; /* bottom = footer height */
   padding-top: 60px; 
 	font-family: $font-family-base;
   background:#fff;
@@ -38,10 +38,10 @@ main {
 
 .controls {
   width:285px;
-  float:right;
-  margin-top: 25px;
+  float: right;
+  margin-top: 35px;
   margin-bottom: 15px;
-  margin-right:1%;
+  margin-right:10%;
   display: inline-block;
 }
 
@@ -69,7 +69,7 @@ main {
 footer {
   color:#222;
   background:#E8E8E8;
- /* padding-top:20px; */
+  padding-top:10px; 
   position: absolute;
   left: 0;
   bottom: 0;
@@ -118,4 +118,20 @@ footer p {
   color: #473A36;
   background-color: #D3CDCA;
   border-color: #D3CDCA;
+}
+
+.alert {
+  width: 92%;
+}
+
+.form-container {
+  color: #473A36;
+  background-color: #E8E8E8;
+  border-color: #E8E8E8;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.span12 {
+  margin-bottom: 22px;
 }

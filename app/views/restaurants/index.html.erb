@@ -1,5 +1,6 @@
 <h1>RESTAURANT LISTINGS</h1>
 
+<div id="restaurant_container">
 <% @restaurants.each do |restaurant| %>
   <% cache restaurant do %>
   <div id="restaurant_<%=restaurant.id%>" class="restaurant_box">
@@ -8,6 +9,7 @@
       <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
     </a>
   </div>
+  <% end %>
 <% end %>
-
 <div class="pagination"><%= paginate @restaurants %></div>
+</div>
