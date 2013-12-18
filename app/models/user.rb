@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   end
 
   def recent_orders
-    orders.where(status: 'completed')
+    orders.where(status: 'Completed')
   end
 
   def restaurant_owner

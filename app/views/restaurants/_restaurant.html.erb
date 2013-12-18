@@ -1,6 +1,6 @@
 <div id="restaurant_<%= restaurant.id %>", class="restaurant">
 
-  <h1><%= link_to restaurant.name, restaurant %></h1>
+  <h1><%= link_to restaurant.name.upcase, restaurant %></h1>
 
   <div id="items">
     <ul>

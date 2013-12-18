@@ -1,19 +1,20 @@
-<h1>Create your own restaurant</h1>
-
-<%= form_for @restaurant do |f| %>
-  <p>
-    <%= f.label :name, "Restaurant Name" %>
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :location, "Address" %>
-    <%= f.text_field :location %>
-  </p>
-  <p>
-    <%= f.label :zipcode, "Zipcode" %>
-    <%= f.number_field :zipcode %>
-  </p>
-  <p>
-    <%= f.submit "Submit for approval" %>
-  </p>
-<% end %>
+<h1>CREATE YOUR OWN RESTAURANT</h1>
+<div id="create_restaurant_form">
+  <%= form_for @restaurant do |f| %>
+    <p>
+      <%= f.label :name, "Restaurant Name" %>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :location, "Address" %>
+      <%= f.text_field :location %>
+    </p>
+    <p>
+      <%= f.label :zipcode, "Zipcode" %>
+      <%= f.text_field :zipcode %>
+    </p>
+    <p>
+      <%= f.submit "Submit for approval" %>
+    </p>
+  <% end %>
+</div>
