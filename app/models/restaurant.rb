@@ -5,6 +5,8 @@ class Restaurant < ActiveRecord::Base
   has_many :roles, through: :jobs
   has_many :jobs
 
+  paginates_per 24
+
   def find_or_create_new_order(order_ids)
     order_ids = order_ids.to_s.split(',')
     current_orders = [Order.find_all(order_ids)].flatten
