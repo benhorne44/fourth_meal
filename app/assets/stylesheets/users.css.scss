@@ -37,3 +37,18 @@
 .container {
   color: #473A36;
 }
+
+#new_member_text {
+  display: inline-block;
+  width: 400px;
+  vertical-align: text-top;
+  margin-top: 20px;
+  padding-right: 40px;
+  margin-left: 10px;
+}
+
+#new_member_form {
+  display: inline-block;
+  vertical-align: text-top;
+  margin-bottom: 25px;
+}

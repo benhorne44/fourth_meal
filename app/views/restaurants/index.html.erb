@@ -1,15 +1,15 @@
 <h1>RESTAURANT LISTINGS</h1>
 
+<div id="restaurant_container">
 <% @restaurants.each do |restaurant| %>
-
   <% cache restaurant do %>
-    <div id="restaurant_<%=restaurant.id%>" class="restaurant_box">
-      <a href="<%= restaurant_path(restaurant) %>">
-        <div class="restaurant_image"><%= image_tag restaurant.items.sample.image %></div>
-        <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
-      </a>
-    </div>
+  <div id="restaurant_<%=restaurant.id%>" class="restaurant_box">
+    <a href="<%= restaurant_path(restaurant) %>">
+      <div class="restaurant_image"><%= image_tag "retto_homepage_link.png" %></div>
+      <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
+    </a>
+  </div>
   <% end %>
 <% end %>
-
 <div class="pagination"><%= paginate @restaurants %></div>
+</div>
