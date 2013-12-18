@@ -1,7 +1,7 @@
 <% cache item do %>
 <li id="item_<%= item.id %>" class="item">
   <div class="item-wrapper">
-      <%= image_tag "spoon_bread1.jpg", {:class => "item-show-image"} %><br/>
+    <%= image_tag "spoon_bread1.jpg", {:size => '170x170', :class => "item-show-image"} %><br/>
     <div class="item-details">
       <a href="<%= item_path item.id %>" class="title"><strong><%= item.title %></strong></a>
       <p> <%= item.description %></p>
