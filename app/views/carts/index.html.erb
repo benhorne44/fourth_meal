@@ -39,7 +39,7 @@
                 <td>
                   <%= form_for order_item(order, item) do |f| %>
                   <%= f.number_field :quantity, value: order_item_quantity(order, item) %>
-                  <%= f.submit "Update Quantity" %>
+                  <%= f.submit "Update" %>
                 </td>
                 <% end %>
                 <td>
@@ -57,14 +57,27 @@
             <%= button_to "Checkout", checkout_path(order) %>
           </div>
 
+          <div class='order-subtotal'>
+            <h3>Subtotal: <%= print_price(order.subtotal) %></h3>
+          </div>
+
         </div>
       </div>
     <% end %>
+  </div>
+</div>
+
+<div id='final-order-total'>
+  <article>
+    <div id="all_orders_total">
+      <h4>Order Total</h4>
+      <h4><%= print_price(@total) %></h4>
+    </div>
+  </article>
   <% if @orders.count > 1 %>
     <span id="checkout_all">
       <%= button_to "Checkout All", checkout_all_path %>
     </span>
   <% end %>
-  </div>
 </div>
 

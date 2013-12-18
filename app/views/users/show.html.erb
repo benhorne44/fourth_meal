@@ -23,8 +23,8 @@
 <div id="recent_orders">
   <% @recent_orders.each do |order| %>
   <h3>Order Number: <%= order.id %> </h3>
+  <h4><%= link_to order.restaurant.name, restaurant_path(order.restaurant) %></h4>
   <p><strong>Date Placed:</strong> <%= order.updated_at.to_s(:long) %></p>
-  <p><strong>User:</strong> <%= order.user.username %> </p>
   <h5>Order Status: <%= order.status %></h5>
     <table class="table">
       <thead>

@@ -2,9 +2,9 @@ module OrdersHelper
 
   def checkout_header
     if current_user 
-      "Order for #{current_user.username}"
+      "ORDER FOR '#{current_user.username.upcase}'"
     else
-      "Review Your Order"
+      "REVIEW YOUR ORDER"
     end
   end
 
