@@ -44,8 +44,17 @@ main {
 }
 
 .controls .btn-primary {
-  background-color: #D3CDCB;
-  border-color: #D3CDCB;
+  color: #473A36;
+  background-color: #E8E8E8;
+  border-color: #E8E8E8;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.controls .btn-primary:hover { 
+  color: #473A36;
+  background-color: #D3CDCA;
+  border-color: #D3CDCA;
 }
 
 .login {
@@ -57,7 +66,7 @@ main {
 
 footer {
   color:#222;
-  background:#D3CDCA;
+  background:#E8E8E8;
  /* padding-top:20px; */
   position: absolute;
   left: 0;
@@ -68,4 +77,39 @@ footer {
 
 footer p {
   text-align: center;
+}
+
+.content h1 {
+  font-size: 22px;
+  letter-spacing:5px;
+  color: #473A36;
+  padding-left: 10px;
+}
+
+.btn-info {
+  color: #473A36;
+  background-color: #E8E8E8;
+  border-color: #E8E8E8;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.btn-info:hover { 
+  color: #473A36;
+  background-color: #D3CDCA;
+  border-color: #D3CDCA;
+}
+
+.btn-warning {
+  color: #473A36;
+  background-color: #E8E8E8;
+  border-color: #E8E8E8;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.btn-warning:hover { 
+  color: #473A36;
+  background-color: #D3CDCA;
+  border-color: #D3CDCA;
 }
