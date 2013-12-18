@@ -53,11 +53,13 @@ group :test, :development do
   gem 'sqlite3'
   gem 'pg'
   gem 'factory_girl_rails', '~> 4.0'
+  gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 end
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  gem 'dalli'
 end
 
 # group :development do
@@ -70,3 +72,4 @@ gem 'paperclip'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'aws-sdk', '~> 1.25'
 gem 'resque'
+gem 'kaminari'

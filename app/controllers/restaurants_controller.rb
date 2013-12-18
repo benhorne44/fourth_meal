@@ -2,7 +2,7 @@ class RestaurantsController < ApplicationController
 
 
   def index
-    @restaurants = Restaurant.published_and_active
+    @restaurants = Restaurant.published_and_active.page params[:page]
   end
 
   def show

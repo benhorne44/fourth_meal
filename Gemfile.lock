@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/jetthoughts/yaml_db.git
+  revision: fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba
+  ref: fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba
+  specs:
+    yaml_db (0.2.3)
+
+GIT
   remote: https://github.com/stripe/stripe-ruby
   revision: 294d6c63b3aa5d63d03f58872622c732a54b73bc
   specs:
@@ -69,6 +76,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    dalli (2.6.4)
     debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -102,6 +110,9 @@ GEM
     json (1.8.1)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    kaminari (0.15.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.4.0)
       addressable (~> 2.3)
     listen (2.2.0)
@@ -247,11 +258,13 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass
   coffee-rails (~> 4.0.0)
+  dalli
   factory_girl_rails (~> 4.0)
   guard
   guard-minitest
   jbuilder (~> 1.2)
   jquery-rails
+  kaminari
   launchy
   minitest-rails-capybara
   paperclip
@@ -267,3 +280,4 @@ DEPENDENCIES
   stripe!
   turbolinks
   uglifier (>= 1.3.0)
+  yaml_db!
