@@ -13,16 +13,6 @@ class OrdersController < ApplicationController
     redirect_to order
   end
 
-  # def show
-  #   if cookies[:order_id]
-  #     @order
-  # = Order.find(cookies[:order_id])
-  #   elsif params[:id]
-  #     @order = Order.find(params[:id])
-  #   end
-  #   @order_items = @order.order_items
-  # end
-
   def checkout
     if cookies[:order_ids].to_s.split(",").include? params[:id].to_s
       @order = Order.find_by(id: params[:id])
