@@ -7,6 +7,8 @@ module ApplicationHelper
   def login_status
     if current_user
       "Logged in as #{current_user.username}"
+    else
+      " "
     end
   end
 

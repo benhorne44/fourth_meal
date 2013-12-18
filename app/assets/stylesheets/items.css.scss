@@ -15,7 +15,7 @@
 }
 
 #items ul li.item {
-  width:43%;
+  width:440px;
   float:left;
   background: #E8E8E8;
   margin-top:20px;
@@ -51,8 +51,20 @@ li.item .title {
 
 .item-details {
   float:right;
+  margin: auto;
+  margin-top: -5px;
+  width: 57%;
+}
+
+.item-details p {
+  display: inline-block;
+  float: left;
   margin-right: 10px;
-  width: 56%;
+  margin-top: 1px;
+}
+
+.price_and_button {
+  margin-top: 1px;
 }
 
 ul.categories {

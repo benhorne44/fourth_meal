@@ -10,11 +10,11 @@ html {
 }
 
 body {
-  margin: 0 10% 7% 10%; /* bottom = footer height */
+  margin: 0 10% 0 15%; /* bottom = footer height */
   padding-top: 60px; 
 	font-family: $font-family-base;
   background:#fff;
-  width: 70%; 
+  width: 80%; 
 }
 
 .navbar-fixed-top {
@@ -86,6 +86,10 @@ footer p {
   letter-spacing:5px;
   color: #473A36;
   padding-left: 10px;
+}
+
+.content {
+  width: 80%
 }
 
 .btn-info {
