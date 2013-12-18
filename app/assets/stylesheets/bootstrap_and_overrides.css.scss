@@ -10,10 +10,11 @@ html {
 }
 
 body {
-  margin: 0 0 100px; /* bottom = footer height */
+  margin: 0 10% 7% 10%; /* bottom = footer height */
   padding-top: 60px; 
 	font-family: $font-family-base;
   background:#fff;
+  width: 70%; 
 }
 
 .navbar-fixed-top {
@@ -41,6 +42,7 @@ main {
   margin-top: 25px;
   margin-bottom: 15px;
   margin-right:1%;
+  display: inline-block;
 }
 
 .controls .btn-primary {

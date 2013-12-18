@@ -15,9 +15,13 @@
 @import "bootstrap";
 
 #main_logo {
-  padding-top: 15px;
-  padding-left: 150px;
+  padding-top: 20px;
+  /* padding-left: 150px; */
   margin-bottom: -70px; 
 }
 
+.navbar-inner {
+  margin: auto;
+  width: 77%;
+}
 
