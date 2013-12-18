@@ -17,15 +17,14 @@
           <%= link_to image_tag("retto_logo-rgb.png"), root_path, alt: 'retto' %>
         </div>
           <div class="controls">
-            <p><%= login_status %></p>
             <div id="order_items_total">
-              <a href="/cart">Order <span class="badge"><%= cart_items_total %></span></a>
               <% if current_user %>
-                <%= link_to "My Account", user_path(current_user), {:class => "btn btn-info"} %>
                 <%= link_to "Logout", logout_path, {:class => "btn btn-warning"} %>
+                <%= link_to current_user.username, user_path(current_user), {:class => "btn btn-info"} %>
               <% else %>
                 <%= link_to "Login", login_path, {:class => "btn btn-primary login"} %>
               <% end %>
+              <a href="/cart">Order <span class="badge"><%= cart_items_total %></span></a>
             </div>
           </div>
         <div class="container">
@@ -46,7 +45,7 @@
               <p>rétto: an open-source food ordering service built by gSchool class[1]</p>
               <p>Will Mitchell, Ben Horne &amp; Louisa Barrett</p>
               <p><%= image_tag "retto_mark.png", alt: "retto" %></p>
-              <%= create_restaurant_link %>
+              <p><%= create_restaurant_link %></p>
             </div>
           </footer>
         </div>

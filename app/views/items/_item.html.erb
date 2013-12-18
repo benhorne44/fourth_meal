@@ -1,21 +1,23 @@
 <% cache item do %>
-  <li id="item_<%= item.id %>" class="item">
-    <div class="item-wrapper">
-      <% if item.image? %>
-        <% image_tag item.image.url(:small), {:class => "item-show-image"} %><br/>
-      <% end %>
-      <div class="item-details">
-        <a href="<%= item_path item.id %>" class="title"><%= item.title %></a>
-        <p> <%= item.description %></p>
+<li id="item_<%= item.id %>" class="item">
+  <div class="item-wrapper">
+    <% if item.image? %>
+      <%= image_tag "http://lorempixel.com/output/food-q-c-170-170-1.jpg", {:class => "item-show-image"} %><br/>
+    <% end %>
+    <div class="item-details">
+      <a href="<%= item_path item.id %>" class="title"><strong><%= item.title %></strong></a>
+      <p> <%= item.description %></p>
+      <ul class="categories">
+        <li class="glyphicon glyphicon-tag category"></li>
+        <% item.categories.each do |category| %>
+          <li class="category"><%= link_to category.name, restaurant_path(item.restaurant, Categories: category.id) %></li>
+        <% end %>
+      </ul>
+      <div class="price_and_button">
         <p><%=print_price(item.price) %></p>
-        <ul class="categories">
-          <li class="glyphicon glyphicon-tag category"></li>
-          <% item.categories.each do |category| %>
-            <li class="category"><%= link_to category.name, items_path(Categories: category.id) %></li>
-          <% end %>
-        </ul>
         <%= button_to "Add to Order", add_item_path(item.id), {:class => "btn btn-success" } %>
       </div>
-a   </div>
-  </li>
+    </div>
+  </div>
+</li>
 <% end %>
