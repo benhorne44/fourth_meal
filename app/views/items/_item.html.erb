@@ -1,9 +1,7 @@
 <% cache item do %>
 <li id="item_<%= item.id %>" class="item">
   <div class="item-wrapper">
-    <% if item.image? %>
       <%= image_tag "http://lorempixel.com/output/food-q-c-170-170-1.jpg", {:class => "item-show-image"} %><br/>
-    <% end %>
     <div class="item-details">
       <a href="<%= item_path item.id %>" class="title"><strong><%= item.title %></strong></a>
       <p> <%= item.description %></p>

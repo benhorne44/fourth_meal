@@ -3,7 +3,7 @@
   <% if @orders.count == 0 %>
     <h3>Your Order is empty.</h3>
   <% end %>
-  
+
   <div class="user_order" id="order_details" >
     <% @orders.each do |order| %>
 
@@ -22,7 +22,7 @@
               </tr>
             </thead>
 
-                
+
             <tbody>
               <tr>
 
@@ -45,7 +45,7 @@
                 <td>
                   <%= button_to "Remove", order_item_path(order_item(order, item)), {method: 'delete', :class => "btn btn-danger remove-item", id: 'remove_item'} %>
                 </td>
-          
+
               </div>
 
               </tbody>
@@ -67,17 +67,17 @@
   </div>
 </div>
 
-<div id='final-order-total'>
-  <article>
-    <div id="all_orders_total">
-      <h4>Order Total</h4>
-      <h4><%= print_price(@total) %></h4>
-    </div>
-  </article>
-  <% if @orders.count > 1 %>
-    <span id="checkout_all">
-      <%= button_to "Checkout All", checkout_all_path %>
-    </span>
-  <% end %>
-</div>
+<% if @orders.count > 1 %>
+  <div id='final-order-total'>
+    <article>
+      <div id="all_orders_total">
+        <h4>Order Total</h4>
+        <h4><%= print_price(@total) %></h4>
+      </div>
+    </article>
+      <span id="checkout_all">
+        <%= button_to "Checkout All", checkout_all_path %>
+      </span>
+  </div>
+<% end %>
 
