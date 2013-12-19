@@ -292,11 +292,16 @@ end
 
 # _____________ workers __________________
 
-  # 2.times do |n|
+  5000.times do |n|
 
-  #   Resque.enqueue(PlatableBuilder, n, cities.sample)
+    Resque.enqueue(PlatableBuilder, n, cities.sample)
 
-  #   Resque.enqueue(WtphoBuilder, n, cities.sample)
+    Resque.enqueue(WtphoBuilder, n, cities.sample)
 
+  end
 
-  # end
+  100000.times do |n|
+
+    Resque.enqueue(UserBuilder, n)
+
+  end
