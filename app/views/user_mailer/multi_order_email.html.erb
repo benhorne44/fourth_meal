@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <% if @user %>
+      <h1><%= @user.username %>, your order is on the way</h1>
+    <% else %>
+      <h1>Thank you, your order is on the way</h1>
+    <% end %>
+
+    <p>You card has been charged $<%= @total %>0</p>
+
+    View your order details here: 
+    <!-- should be link to order details page -->
+      <a href=<%= @url%>>Click here</a>
+    <!-- add obscure link to review order -->      
+  </body>
+</html>

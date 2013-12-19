@@ -5,21 +5,7 @@ class ChargesController < ApplicationController
     @orders = Order.find(order_ids)
     @total = @orders.inject(0) { |total, order| total + order.subtotal}
 
-
-    customer = Stripe::Customer.create(
-      :email => 'example@stripe.com',
-      :card  => params[:stripeToken]
-    )
-    begin
-      charge = Stripe::Charge.create(
-        :customer    => customer.id,
-        :amount      => @total,
-        :description => 'Rails Stripe customer',
-        :currency    => 'usd'
-      )
-    rescue Stripe::CardError => e
-      flash[:error] = e.message
-    else
+    if PaymentProcess.process(@total, params[:stripeToken])
       timestamp = Time.now
       @orders.each do |order|
         order.update_status('Completed')
@@ -31,9 +17,10 @@ class ChargesController < ApplicationController
         order.save
       end
       flash.notice = "Your order is successfull"
+      recipient_email = current_user ? current_user.email : cookies[:guest_email]
+      Resque.enqueue(MultiOrderEmail, recipient_email, order_ids)
       cookies.delete :order_ids
       cookies.delete :guest_email
-      # UserMailer.order_email(current_user, current_user.orders.last).deliver
     end
     redirect_to completed_order_path(@orders.first.obscure_identifier)
   end
@@ -43,7 +30,7 @@ class ChargesController < ApplicationController
     order_id = ([params[:id].to_s] & cookies[:order_ids].to_s.split(',')).first
     @order = Order.find(order_id)
     @amount = @order.subtotal
-    if PaymentProcess.process_single(@order, @amount, params[:stripeToken])
+    if PaymentProcess.process(@amount, params[:stripeToken])
       @order.update_status('Completed')
       if current_user
         @order.obscure_identifier = Encryptor.obscure_details(current_user.email, Time.now)

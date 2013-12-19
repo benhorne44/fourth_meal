@@ -1,6 +1,6 @@
 class PaymentProcess
 
-  def self.process_single(order, amount, stripe_token)
+  def self.process(amount, stripe_token)
     customer = Stripe::Customer.create(
       :email => 'example@stripe.com',
       :card  => stripe_token
@@ -20,6 +20,4 @@ class PaymentProcess
     end
   end
 
-  def self.process_mutiple(orders, amount)
-  end
 end
